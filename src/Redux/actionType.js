@@ -1,0 +1,6 @@
+export const LOADING = 'LOADING'
+export const ERROR = 'ERROR'
+export const GETSUCCESS = 'GETSUCCESS'
+
+export const LOGINSUCCESS = "LOGINSUCCESS";
+export const REGISTERSUCCESS = "REGISTERSUCCESS"
