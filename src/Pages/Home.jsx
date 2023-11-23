@@ -22,7 +22,7 @@ export const Home = () => {
   return (
     <Box px={12} mx={-12}>
       {/* section 1 */}
-      <Flex justifyContent={"center"} gap={28} px={20}>
+      <Flex justifyContent={"center"} gap={28} >
         <Box
           bg={"brand.300"}
           borderRadius={12}
@@ -81,7 +81,7 @@ export const Home = () => {
         />
       </Flex>
       {/* section 2 */}
-      <Box px={20} mt={12}>
+      <Box  mt={12}>
         <Flex my={12} gap={16} alignItems={"flex-end"}>
           <Heading fontSize={42} as={"h2"}>
             Search <br></br>by Category
@@ -231,7 +231,7 @@ export const Home = () => {
       </Box>
 
       {/* section 3 */}
-      <Box px={20} mx={-12} mt={36} py={12}  bgColor={"brand.300"}>
+      <Box  mx={-24} mt={36} py={12}  bgColor={"brand.300"}>
         <Box px={32}>
         <Flex my={12} gap={16} alignItems={"flex-end"}>
           <Heading fontSize={42} as={"h2"}>
@@ -244,7 +244,7 @@ export const Home = () => {
         <Flex alignItems={"center"} gap={12} pos={'relative'}>
           <Image
             src={OffersImg}
-            w={"50%"}
+            w={"45%"}
             pos={"absolute"}
             zIndex={0}
             right={6}
@@ -272,7 +272,7 @@ export const Home = () => {
           </span>
         </Flex>
         </Box>
-        <Grid templateColumns='repeat(3, 1fr)' gap={8} mt={12} zIndex={2}>
+        <Grid px={20} templateColumns='repeat(3, 1fr)' gap={8} mt={12} zIndex={2}>
           <Stack
             p={12}
             borderRadius={12}

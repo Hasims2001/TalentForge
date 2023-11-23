@@ -4,7 +4,7 @@ import {Box, Flex, Image, Text, Heading} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 export const Footer = () => {
   return (
-    <Box mt={16} px={16} py={8} >
+    <Box mt={16} py={8} >
         <Flex justifyContent={'space-between'}>
             <Flex gap={2} alignItems={'center'}>
                 <Image src={LogoImg}  w={14}/><Text as={'b'} fontSize={24}>Talent Forge</Text>
@@ -21,7 +21,7 @@ export const Footer = () => {
         <Text borderTop={"1px solid #e0e0e0"} mt={16}></Text>
         <Flex justifyContent={'space-between'} mt={8} color={"brand.400"}>
             <Text>Talent Forge</Text>
-            <Flex gap={12}>
+            <Flex gap={12} color={"brand.130"}>
                 <Link to={"/jobs"}>Jobs</Link>
                 <Link to={"/companies"}>Companies</Link>
                 <Link to={"/about"}>About us</Link>

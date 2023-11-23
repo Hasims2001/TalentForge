@@ -14,7 +14,6 @@ export const Navbar = () => {
   }, [role]);
   return (
     <Flex
-      px={16}
       py={4}
       justifyContent={"space-between"}
       alignItems={"center"}
