@@ -19,7 +19,6 @@ export const doLogin = (API_URL, userData) => async(dispatch)=>{
 
 export const doRegister = (API_URL, userData)=> async(dispatch)=>{
     dispatch({type: LOADING})
-    try {
         let res = await axios.post(API_URL,userData)
         res = await res?.data;
         if(!res.issue){
@@ -27,9 +26,7 @@ export const doRegister = (API_URL, userData)=> async(dispatch)=>{
         }else{
             dispatch({type: ERROR, payload: res.message})
         }
-    } catch (error) {
-        dispatch({type: ERROR, payload: error.message})
-    }
+   
 }
 export const postLoginJobseeker =(userData) => async(dispatch)=>{
     dispatch(doLogin(`${process.env.REACT_APP_JOB_SEEKER}/login`,userData))
