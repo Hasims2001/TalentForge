@@ -1,11 +1,12 @@
+import Cookies from "js-cookie";
 import { ERROR, LOADING, LOGINSUCCESS, REGISTERSUCCESS } from "../actionType";
 
 const init = {
     loading: false,
     error: "",
-    isAuth: false,
-    user: {},
-    role: "",
+    user:JSON.parse(Cookies.get('user') || null) || {},
+    token: Cookies.get('userToken') || "",
+    role: Cookies.get('userRole') || "",
     message: ""
 }
 export const reducer = (state=init, {type, payload})=>{
@@ -25,9 +26,9 @@ export const reducer = (state=init, {type, payload})=>{
             return {
                 ...state,
                 loading: false,
-                isAuth: true,
                 user: payload,
-                role: payload.role
+                role: payload.role,
+                token: payload.token
             }
         case REGISTERSUCCESS:
             return {

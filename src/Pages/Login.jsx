@@ -15,20 +15,24 @@ import {useDispatch, useSelector} from "react-redux"
 import { postLoginRecruiter } from "../Redux/AuthReducer/action";
 import { postLoginJobseeker } from "../Redux/AuthReducer/action";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 export const Login = () => {
     const [data, setData] = useState()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {message, loading, error, isAuth} = useSelector(store=> store.Auth)
+    const {message, loading, error,  user, token} = useSelector(store=> store.Auth)
     useEffect(()=>{
       if(error){
           alert(error)
       }
-      if(isAuth){
+      if(token){
+        Cookies.set('user', JSON.stringify(user))
+        Cookies.set("userRole", user.role)
+        Cookies.set('userToken', token)
         alert("login success")
         navigate("/")
       }
-  }, [error, message, isAuth])
+  }, [error, message, token])
     const handleForm = (e)=>{
         e.preventDefault()
         let obj = {
