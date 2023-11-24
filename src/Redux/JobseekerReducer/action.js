@@ -1,2 +1,6 @@
 import axios from 'axios'
-import { ERROR, LOADING, LOGINSUCCESS, REGISTERSUCCESS } from '../actionType';
+import { ACCOUNT_DELETED, ACCOUNT_UPDATED, ERROR, LOADING, } from '../actionType';
+
+
+
+

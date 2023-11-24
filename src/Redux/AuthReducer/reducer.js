@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { ERROR, LOADING, LOGINSUCCESS, REGISTERSUCCESS } from "../actionType";
+import { ACCOUNT_UPDATED, ERROR, LOADING, LOGINSUCCESS, REGISTERSUCCESS } from "../actionType";
 
 const init = {
     loading: false,
@@ -35,6 +35,12 @@ export const reducer = (state=init, {type, payload})=>{
                 ...state,
                 loading: false,
                 message: payload
+            }
+        case ACCOUNT_UPDATED:
+            return {
+                    ...state,
+                    loading: false,
+                    user: payload
             }
         default:
             return state

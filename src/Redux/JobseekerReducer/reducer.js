@@ -1,4 +1,4 @@
-import { ERROR, LOADING, LOGINSUCCESS, REGISTERSUCCESS } from "../actionType";
+import { ACCOUNT_UPDATED, ERROR, LOADING, } from "../actionType";
 
 const init = {
     loading: false,
