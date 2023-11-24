@@ -6,7 +6,7 @@ import {useLocation} from 'react-router-dom'
 function App() {
   const location = useLocation()
   return (
-    <Box px={12}  className="App">
+    <Box px={24}  className="App">
       {location.pathname !== "/login" && location.pathname !== "/register" && <Navbar />}
       <AllRouters />
       {location.pathname !== "/login" && location.pathname !== "/register" && <Footer />}

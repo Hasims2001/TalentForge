@@ -4,7 +4,7 @@ import logo from "../Assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export const Navbar = () => {
-  const { isAuth, role, user } = useSelector((store) => store.Auth);
+  const {  role, user } = useSelector((store) => store.Auth);
   const navigate = useNavigate();
   const [currUser, setCurrUser] = useState("None");
   useEffect(() => {
@@ -14,7 +14,6 @@ export const Navbar = () => {
   }, [role]);
   return (
     <Flex
-      px={16}
       py={4}
       justifyContent={"space-between"}
       alignItems={"center"}
