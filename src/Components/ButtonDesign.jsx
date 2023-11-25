@@ -3,7 +3,7 @@ import {
 
     Button,
   } from "@chakra-ui/react";
-export const ButtonDesign = ({isLoading, types, values}) => {
+export const ButtonDesign = ({isLoading, types, values, widths="100%"}) => {
   return (
     <Button
     my={4}
@@ -11,7 +11,7 @@ export const ButtonDesign = ({isLoading, types, values}) => {
     color={"brand.200"}
     bg={"brand.300"}
     border={"none"}
-    w={"100%"}
+    w={widths}
     _hover={{ bg: "brand.400" }}
   >{isLoading ? "Loading..." : values}</Button>
   )

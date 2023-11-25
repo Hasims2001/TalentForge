@@ -1,4 +1,4 @@
-import { ERROR, LOADING, LOGINSUCCESS, REGISTERSUCCESS } from "../actionType";
+import { ERROR, LOADING, JOB_POSTED } from "../actionType";
 
 const init = {
     loading: false,
@@ -20,7 +20,16 @@ export const reducer = (state=init, {type, payload})=>{
                 loading: false,
                 error: payload
             }
-        
+        case JOB_POSTED:
+            return{
+                ...state,
+                loading: false,
+                message:"Job posted successfully!",
+                jobposted: [
+                    ...state.jobposted,
+                    payload
+                ]
+            }
         default:
             return state
     }
