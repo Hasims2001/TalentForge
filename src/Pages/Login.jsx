@@ -4,6 +4,7 @@ import {
   Text,
   Heading,
   Box,
+  useToast,
   Stack,
 } from "@chakra-ui/react";
 import styled from "styled-components";
@@ -16,23 +17,41 @@ import { postLoginRecruiter } from "../Redux/AuthReducer/action";
 import { postLoginJobseeker } from "../Redux/AuthReducer/action";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import { RESET } from "../Redux/actionType";
 export const Login = () => {
     const [data, setData] = useState()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const toast = useToast()
     const {message, loading, error,  user, token} = useSelector(store=> store.Auth)
     useEffect(()=>{
       if(error){
-          alert(error)
-      }
+        toast({
+          title: error,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+
+        return ()=>{
+          dispatch({type: RESET})
+        }
+    }
+    }, [error])
+    useEffect(()=>{
       if(token){
         Cookies.set('user', JSON.stringify(user))
         Cookies.set("userRole", user.role)
         Cookies.set('userToken', token)
-        alert("login success")
+       toast({
+         title: "Login Successful",
+         status: 'success',
+         duration: 9000,
+         isClosable: true,
+       })
         navigate("/")
       }
-  }, [error, message, token])
+  }, [token])
     const handleForm = (e)=>{
         e.preventDefault()
         let obj = {
