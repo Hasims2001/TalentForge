@@ -72,6 +72,28 @@ export const Account = () => {
     }
   }
 
+  const handleRecruiterForm = (e)=>{
+    e.preventDefault()
+    
+    let name = e.target.name.value;    
+    let email = e.target.email.value;
+    let company_name = e.target.company_name.value;
+    let company_description = e.target.company_description.value;
+    let currentjobrole = e.target.currentjobrole.value;
+    let founded = +e.target.founded.value;
+    let website = e.target.website.value;
+    let company_size = e.target.company_size.value;
+    let city = e.target.city.value;
+    let state = e.target.state.value;
+
+    if(name === "" || email === "" || company_name === "" || company_description === "" || currentjobrole === "" || founded === "" || website === "" || company_size === "" || city === "" || state === ""){
+      errorToast()
+    }else{
+      makeUpdateRequest({name, email, company_name, company_description, currentjobrole, founded, website, company_size, city, state})
+    }
+
+
+  }
   const handlePersonal = (e)=>{
     e.preventDefault()
     let name = e.target.name.value;
@@ -141,7 +163,7 @@ export const Account = () => {
        {role === "Recruiter" && <Button as={Link} to={'/all/postjob'}>My Posted Jobs</Button>}
        <Button onClick={handleLogout} colorScheme='red'>Logout</Button>
         </Stack>
-        <Box>
+       {role === "Jobseeker" && <Box>
             <form onSubmit={handlePersonal}>
             <Heading px={8} pt={8} as={'h3'} size={'lg'}>Personal Information!</Heading>
             <Flex flexWrap={'wrap'} maxW={"60%"} gap={8} p={8} >
@@ -194,7 +216,25 @@ export const Account = () => {
                 <ButtonDesign isLoading={loading} types={"submit"} values={"Update Experince"}></ButtonDesign>
             </Flex>
             </form>
-        </Box>
+        </Box>}
+        {role === "Recruiter" && <Box>
+        <form onSubmit={handleRecruiterForm}>
+            <Heading px={8} pt={8} as={'h3'} size={'lg'}>Profile!</Heading>
+            <Flex flexWrap={'wrap'} maxW={"60%"} gap={8} p={8} >
+                <InputDesign ids="name" types={'text'} name="Name" values={`${user.name || ""}`}></InputDesign>
+                <InputDesign ids="email" types={'email'} name="Email" values={`${user.email || ""}`}></InputDesign>
+                <InputDesign ids="company_name" types={'text'} name="Company name" values={`${user.company_name || ""}`}></InputDesign>
+                <InputDesign ids="company_description" types={'text'} name="Company description" values={`${user.company_description || ""}`}></InputDesign>
+                <InputDesign ids="currentjobrole" types={'text'} name="Current job role" values={`${user.current_jobrole || ""}`}></InputDesign>
+                <InputDesign ids="founded" types={'number'} name="Founded (YYYY)" values={`${user.founded || ""}`}></InputDesign>
+                <InputDesign ids="website" types={'text'} name="Website" values={`${user.website || ""}`}></InputDesign>
+                <InputDesign ids="company_size" types={'text'} name="Company size (employees)" values={`${user.company_size || ""}`}></InputDesign>
+                <InputDesign ids="city" types={'text'} name="City" values={`${user.city || ""}`}></InputDesign>
+                <InputDesign ids="state" types={'text'} name="State" values={`${user.state || ""}`}></InputDesign>
+                <ButtonDesign types={"submit"} isLoading={loading} values={"Update Profile"} ></ButtonDesign>
+            </Flex>
+            </form>
+          </Box>}
     </Flex>
   )
 }
