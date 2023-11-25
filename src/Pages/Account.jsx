@@ -1,19 +1,41 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Box, Flex, Text, Stack,Button, Image,useToast, Heading, Avatar} from '@chakra-ui/react'
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { InputDesign } from '../Components/InputDesign';
 import { ButtonDesign } from '../Components/ButtonDesign';
 import {XCircle} from "lucide-react"
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { updateAccountJobseeker, updateAccountRecruiter } from '../Redux/AuthReducer/action';
 export const Account = () => {
-  const {  role, user } = useSelector((store) => store.Auth);
+  const {  role, user, token, loading, error, message } = useSelector((store) => store.Auth);
   const [skills, setSkills] = React.useState([])
   const toast = useToast()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const errorToast = ()=>{
+
+  useEffect(()=>{
+    if(error !== ""){
+      errorToast(error)
+    }
+    return ()=>{
+      dispatch({type: "RESET"})
+    }
+  }, [error])
+
+  useEffect(()=>{
+    if(message!== ""){
+      toast({
+        title: message,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+  }, [message])
+  const errorToast = (msg="All fields are required!")=>{
     toast({
-      title: 'All fields are required!',
+      title: msg,
       status: 'error',
       duration: 9000,
       isClosable: true,
@@ -42,6 +64,13 @@ export const Account = () => {
     navigate("/")
   }
 
+  const makeUpdateRequest = (userData)=>{
+    if(role === "Recruiter"){
+        dispatch(updateAccountRecruiter(userData, user.id, token))
+    }else{
+        dispatch(updateAccountJobseeker(userData, user.id, token))
+    }
+  }
 
   const handlePersonal = (e)=>{
     e.preventDefault()
@@ -57,7 +86,7 @@ export const Account = () => {
     if(name === "" || email === "" || phone === "" || address === "" || city === "" || state === "" || pincode === ""){
       errorToast()
     }else{
-        console.log(name, email, phone, address, city, state, pincode)
+      makeUpdateRequest({name, email, phone, address, city, state, pincode})
     }
 
   }
@@ -69,6 +98,8 @@ export const Account = () => {
 
     if(degreeName === "" || intitute === "" || year === ""){
       errorToast()
+    }else{
+      makeUpdateRequest({degreeName, intitute, year})
     }
   }
 
@@ -95,7 +126,7 @@ export const Account = () => {
     if(companyName === "" || position === "" || from === "" || to === ""){
       errorToast()
     }else{
-        console.log(companyName, position, from, to)
+      makeUpdateRequest({companyName, position, from, to})
     }
   }
   return (
@@ -121,7 +152,7 @@ export const Account = () => {
                 <InputDesign ids="city" types={'text'} name="City" values={`${user.city || ""}`}></InputDesign>
                 <InputDesign ids="state" types={'text'} name="State" values={`${user.state || ""}`}></InputDesign>
                 <InputDesign ids="pincode" types={'number'} name="Pincode" values={`${user.pincode || ""}`}></InputDesign>
-                <ButtonDesign types={"submit"} values={"Update Profile"} ></ButtonDesign>
+                <ButtonDesign types={"submit"} isLoading={loading} values={"Update Profile"} ></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleSkills}>
@@ -141,7 +172,7 @@ export const Account = () => {
                 }
             </Flex>
            
-            <ButtonDesign types={"submit"} values={"Update Skills"}></ButtonDesign>
+            <ButtonDesign types={"submit"} isLoading={loading} values={"Update Skills"}></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleEducational}>
@@ -150,7 +181,7 @@ export const Account = () => {
                 <InputDesign ids="degreeName" types={'text'} name="Degree/Standard name" values={`${user.degreeName || ""}`}></InputDesign>
                 <InputDesign ids="intitute" types={'text'} name="Intitute name" values={`${user.intitute || ""}`}></InputDesign>
                 <InputDesign ids="year" types={'number'} name="Year of completion" values={`${user.year || ""}`}></InputDesign>
-                <ButtonDesign types={"submit"} values={"Update Education"}></ButtonDesign>
+                <ButtonDesign isLoading={loading} types={"submit"} values={"Update Education"}></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleExperince}>
@@ -160,7 +191,7 @@ export const Account = () => {
                 <InputDesign ids="position" types={'text'} name="Position" values={`${user.position || ""}`}></InputDesign>
                 <InputDesign ids="from" types={'date'} name="From" values={`${user.from || ""}`}></InputDesign>
                 <InputDesign ids="to" types={'date'} name="To" values={`${user.to || ""}`}></InputDesign>
-                <ButtonDesign types={"submit"} values={"Update Experince"}></ButtonDesign>
+                <ButtonDesign isLoading={loading} types={"submit"} values={"Update Experince"}></ButtonDesign>
             </Flex>
             </form>
         </Box>

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Flex,
   Text,
   Heading,
   Box,
   Stack,
- 
+  useToast
 } from "@chakra-ui/react";
 import styled from "styled-components";
 import { LoginDesign } from "../Components/LoginDesign";
@@ -16,21 +16,37 @@ import { postRegisterRecruiter } from "../Redux/AuthReducer/action";
 import { postRegisterJobseeker } from "../Redux/AuthReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 import {useNavigate} from 'react-router-dom'
+import { RESET } from "../Redux/actionType";
 export const Register = () => {
     const [page, setPage] = useState(1);
     const [data, setData] = useState({}); 
+    const toast = useToast()
     const {message, loading, error} = useSelector(store=> store.Auth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     useEffect(()=>{
-        if(error){
-            alert(error)
-        }
+      if(error){
+        toast({
+          title: error,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+      return ()=>{
+        dispatch({type: RESET})
+      }
+    }, [error])
+
+    useEffect(()=>{
         if(message === "Register successfully!"){
-            alert(message + " Login to continue")
+            alert(message + ", Login to continue")
             navigate("/login")
         }
-    }, [error, message])
+        return ()=>{
+          dispatch({type: RESET})
+        }
+    }, [message])
   const handleFormOne = (e) => {
     e.preventDefault();
     setData({
@@ -55,6 +71,7 @@ export const Register = () => {
       "city": e.target.city.value,
       "state": e.target.state.value,
       "pincode": e.target.pincode.value,
+      "phone": +e.target.phone.value
     }
     setData(obj)
     dispatch(postRegisterJobseeker(obj))
@@ -129,6 +146,7 @@ export const Register = () => {
            </form>}
 
            {page === 2 && <form onSubmit={handleFormTwo}>
+            <InputDesign ids="phone" types="number" name={"Phone Number"} />
            <InputDesign ids="address" types="text" name={"Address"} />
             <InputDesign ids="city" types="text" name={"City"} />
             <InputDesign ids="state" types="text" name={"State"} />
