@@ -11,7 +11,6 @@ export const doLogin = (API_URL, userData) => async(dispatch)=>{
         if(!res.issue){
             dispatch({type: LOGINSUCCESS, payload: res.data})
         }else{
-            console.log(res)
             dispatch({type: ERROR, payload: res.response.data.message})
         }
        }catch(error){
