@@ -5,6 +5,7 @@ import { Register } from '../Pages/Register'
 import { Login } from '../Pages/Login'
 import { PageNotFound } from '../Pages/PageNotFound'
 import { Account } from '../Pages/Account'
+import { JobPosts } from '../Pages/JobPosts'
 export const AllRouters = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ export const AllRouters = () => {
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/account' element={<Account />}></Route>
+        <Route path='/jobposts' element={<JobPosts />}></Route>
         <Route path='/*' element={<PageNotFound />}></Route>
     </Routes>
   )

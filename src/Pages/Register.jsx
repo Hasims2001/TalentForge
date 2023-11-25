@@ -82,11 +82,9 @@ export const Register = () => {
     let obj = {
       ...data,
       "company_name": e.target.company_name.value,
-      "company_address": e.target.company_address.value,
+      "current_jobrole": e.target.current_jobrole.value,
       "city": e.target.city.value,
       "state": e.target.state.value,
-      "pincode": e.target.pincode.value,
-      
     }
     setData(obj)
     dispatch(postRegisterRecruiter(obj))
@@ -158,10 +156,9 @@ export const Register = () => {
 
            {page === 3 && <form onSubmit={handleFormThree}>
            <InputDesign ids="company_name" types="text" name={"Company Name"} />
-            <InputDesign ids="company_address" types="text" name={"Company Address"} />
+            <InputDesign ids="current_jobrole" types="text" name={"Current Job Role"} />
             <InputDesign ids="city" types="text" name={"City"} />
             <InputDesign ids="state" types="text" name={"State"} />
-            <InputDesign ids="pincode" types="number" name={"Pincode"} />
             <ButtonDesign isLoading={loading}
              values={"Submit"} types={'submit'}
             ></ButtonDesign>
