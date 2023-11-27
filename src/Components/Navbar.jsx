@@ -29,7 +29,7 @@ export const Navbar = () => {
         <Link to={"/"}>Home</Link>
         <Link to={"/jobs"}>Jobs</Link>
         <Link to={"/companies"}>Companies</Link>
-        {role === "Recruiter" && <Link to={"/postjob"}>Post job</Link>}
+        {role === "Recruiter" && <Link to={"/jobposts"}>Job posts</Link>}
         {role === "Jobseeker" && <Link to={"/applications"}>Applications</Link>}
         <Link to={"/contact"}>Contact</Link>
       </Flex>

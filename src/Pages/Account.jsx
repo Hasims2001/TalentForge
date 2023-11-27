@@ -160,7 +160,7 @@ export const Account = () => {
         <Text>{user.city}, {user.state}</Text>
        </Box>
        {role === "Jobseeker" && <Button as={Link} to={'/applications'}>My Applications</Button>}
-       {role === "Recruiter" && <Button as={Link} to={'/all/postjob'}>My Posted Jobs</Button>}
+       {role === "Recruiter" && <Button as={Link} to={'/jobposts'}>My Posted Jobs</Button>}
        <Button onClick={handleLogout} colorScheme='red'>Logout</Button>
         </Stack>
        {role === "Jobseeker" && <Box>

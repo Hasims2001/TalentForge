@@ -9,4 +9,8 @@ export const ACCOUNT_UPDATED = "ACCOUNT_UPDATED";
 export const ACCOUNT_DELETED ="ACCOUNT_DELETED";
 
 export const JOB_POSTED = 'JOB_POSTED';
+export const JOB_GETTED = "JOB_GETTED";
+export const JOB_DELETED = "JOB_DELETED";
+export const JOB_UPDATED = "JOB_UPDATED";
+
 export const APPLIED = 'APPLIED';
