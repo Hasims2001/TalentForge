@@ -10,6 +10,8 @@ export const Navbar = () => {
   useEffect(() => {
     if (role !== "") {
       setCurrUser(role);
+    }else{
+      setCurrUser("None")
     }
   }, [role]);
   return (

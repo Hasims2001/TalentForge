@@ -49,7 +49,7 @@ export const Login = () => {
          duration: 9000,
          isClosable: true,
        })
-        navigate("/")
+        navigate("/",{replace: true})
       }
   }, [token])
     const handleForm = (e)=>{

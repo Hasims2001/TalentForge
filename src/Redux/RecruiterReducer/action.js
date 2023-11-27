@@ -67,3 +67,7 @@ export const deleteJobPost = (id, token)=> async(dispatch)=>{
     dispatch({type: ERROR, payload: error.response.data.message})
    }
 }
+
+export const getJobApplications = (id)=>{
+
+}

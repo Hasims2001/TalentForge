@@ -7,6 +7,7 @@ import {XCircle} from "lucide-react"
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { updateAccountJobseeker, updateAccountRecruiter } from '../Redux/AuthReducer/action';
+import { RESETALL } from '../Redux/actionType';
 export const Account = () => {
   const {  role, user, token, loading, error, message } = useSelector((store) => store.Auth);
   const [skills, setSkills] = React.useState([])
@@ -58,10 +59,12 @@ export const Account = () => {
   }
   const handleLogout = ()=>{
     // logout
+    
     Cookies.remove('user')
     Cookies.remove('userToken')
     Cookies.remove('userRole')
-    navigate("/")
+    dispatch({type: RESETALL})
+    navigate("/", {replace: true})
   }
 
   const makeUpdateRequest = (userData)=>{
