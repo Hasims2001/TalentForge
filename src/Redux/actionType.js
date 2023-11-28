@@ -1,6 +1,7 @@
 export const LOADING = 'LOADING'
 export const ERROR = 'ERROR'
 export const RESET =  "RESET"
+export const RESETALL = "RESETALL"
 export const GETSUCCESS = 'GETSUCCESS'
 
 export const LOGINSUCCESS = "LOGINSUCCESS";
@@ -13,4 +14,5 @@ export const JOB_GETTED = "JOB_GETTED";
 export const JOB_DELETED = "JOB_DELETED";
 export const JOB_UPDATED = "JOB_UPDATED";
 
+export const APPLICATION_GETTED = "APPLICATION_GETTED";
 export const APPLIED = 'APPLIED';

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ERROR, JOB_DELETED, JOB_GETTED, JOB_POSTED, JOB_UPDATED, LOADING } from '../actionType'
+import { APPLICATION_GETTED, ERROR, JOB_DELETED, JOB_GETTED, JOB_POSTED, JOB_UPDATED, LOADING } from '../actionType'
 
 
 export const getJobPost = (token) => async (dispatch)=>{
@@ -60,6 +60,22 @@ export const deleteJobPost = (id, token)=> async(dispatch)=>{
             dispatch({type: JOB_DELETED, payload: id})
         }
         else{
+            dispatch({type: ERROR, payload: res.response.data.message})
+        }
+    }catch(error){
+   
+    dispatch({type: ERROR, payload: error.response.data.message})
+   }
+}
+
+export const getJobApplications = (id, token)=> async(dispatch)=>{
+    dispatch({type: LOADING})
+    try {
+        let res = await axios.get(`${process.env.REACT_APP_RECRUITER}/applications/${id}`,  {headers: {Authorization: token}})
+        res = res?.data
+        if(!res.issue){
+            dispatch({type: APPLICATION_GETTED, payload: res.data})
+        }else{
             dispatch({type: ERROR, payload: res.response.data.message})
         }
     }catch(error){

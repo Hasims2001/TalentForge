@@ -1,7 +1,4 @@
 import { ERROR, LOADING, } from "../actionType";
-
-
-// const {user} = useSelector(store=> store.Auth)
 const init = {
     loading: false,
     error: "",
