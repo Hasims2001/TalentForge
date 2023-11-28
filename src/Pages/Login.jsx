@@ -27,6 +27,7 @@ export const Login = () => {
     useEffect(()=>{
       if(error){
         toast({
+position: 'bottom-right',
           title: error,
           status: 'error',
           duration: 9000,
@@ -44,6 +45,7 @@ export const Login = () => {
         Cookies.set("userRole", user.role)
         Cookies.set('userToken', token)
        toast({
+position: 'bottom-right',
          title: "Login Successful",
          status: 'success',
          duration: 9000,

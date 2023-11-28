@@ -8,11 +8,11 @@ import { Account } from '../Pages/Account'
 import { JobPosts } from '../Pages/JobPosts'
 import { NewJobPost } from '../Pages/NewJobPost'
 import { JobPostsApplications } from '../Pages/JobPostsApplications'
+import { Jobs } from '../Pages/Jobs'
 export const AllRouters = () => {
   return (
     <Routes>
         <Route path='/' element={<Home />}></Route>
-        <Route path='/jobs' element={<Home />}></Route>
         <Route path='/about' element={<Home />}></Route>
         <Route path='/contact' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
@@ -21,6 +21,7 @@ export const AllRouters = () => {
         <Route path='/jobposts' element={<JobPosts />}></Route>
         <Route path='/jobposts/:id/applications' element={<JobPostsApplications />}></Route>
         <Route path='/jobposts/create/job' element={<NewJobPost />}></Route>
+        <Route path='/jobs' element={<Jobs />}></Route>
         <Route path='/*' element={<PageNotFound />}></Route>
     </Routes>
   )

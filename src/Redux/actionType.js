@@ -15,4 +15,8 @@ export const JOB_DELETED = "JOB_DELETED";
 export const JOB_UPDATED = "JOB_UPDATED";
 
 export const APPLICATION_GETTED = "APPLICATION_GETTED";
+export const APPLICATION_UPDATED = "APPLICATION_UPDATED";
 export const APPLIED = 'APPLIED';
+
+export const ALL_JOBS_GETTED = "ALL_JOBS_GETTED";
+export const JOB_APPLIED = "JOB_APPLIED";

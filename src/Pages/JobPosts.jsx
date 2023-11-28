@@ -28,7 +28,7 @@ export const JobPosts = () => {
   const { loading, jobposted, error, message } = useSelector(
     (store) => store.Recruiter
   );
-  const { token } = useSelector((store) => store.Auth);
+  const { token, user } = useSelector((store) => store.Auth);
   const dispatch = useDispatch();
   const [skills, setSkills] = useState(new Set());
   const [prefSkills, setPrefSkills] = useState(new Set());
@@ -37,13 +37,14 @@ export const JobPosts = () => {
   const toast = useToast();
   useEffect(() => {
     if (jobposted.length === 0) {
-      dispatch(getJobPost(token));
+      dispatch(getJobPost(user.id, token));
     }
   }, []);
 
   useEffect(() => {
     if (error) {
       toast({
+position: 'bottom-right',
         title: error,
         status: "error",
         duration: 9000,
@@ -58,6 +59,7 @@ export const JobPosts = () => {
   useEffect(() => {
     if (message) {
       toast({
+position: 'bottom-right',
         title: message,
         status: "success",
         duration: 9000,

@@ -2,7 +2,9 @@ import React from 'react'
 import LogoImg from '../Assets/logo.png'
 import {Box, Flex, Image, Text, Heading} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import {useSelector} from "react-redux"
 export const Footer = () => {
+    const {  role } = useSelector((store) => store.Auth);
   return (
     <Box mt={16} py={8} >
         <Flex justifyContent={'space-between'}>
@@ -25,6 +27,8 @@ export const Footer = () => {
                 <Link to={"/jobs"}>Jobs</Link>
                 <Link to={"/companies"}>Companies</Link>
                 <Link to={"/about"}>About us</Link>
+                {role === "Recruiter" && <Link to={"/jobposts"}>Job posts</Link>}
+                {role === "Jobseeker" && <Link to={"/applications"}>Applications</Link>}
                 <Link to={"/contact"}>Contact</Link>
                 <Link to={"/privacy"}>Privacy & Legal</Link>
             </Flex>

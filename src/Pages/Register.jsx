@@ -27,6 +27,7 @@ export const Register = () => {
     useEffect(()=>{
       if(error){
         toast({
+position: 'bottom-right',
           title: error,
           status: 'error',
           duration: 9000,

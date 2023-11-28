@@ -27,6 +27,7 @@ export const NewJobPost = () => {
   useEffect(()=>{
     if(error){
       toast({
+position: 'bottom-right',
         title: error,
         status: 'error',
         duration: 9000,
@@ -41,6 +42,7 @@ export const NewJobPost = () => {
   useEffect(()=>{
     if(message === "Job posted successfully!"){
       toast({
+position: 'bottom-right',
         title: message,
         status: 'success',
         duration: 9000,

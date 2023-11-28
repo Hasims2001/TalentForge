@@ -27,6 +27,7 @@ export const Account = () => {
   useEffect(()=>{
     if(message!== ""){
       toast({
+position: 'bottom-right',
         title: message,
         status: 'success',
         duration: 9000,
@@ -36,6 +37,7 @@ export const Account = () => {
   }, [message])
   const errorToast = (msg="All fields are required!")=>{
     toast({
+position: 'bottom-right',
       title: msg,
       status: 'error',
       duration: 9000,
@@ -132,6 +134,7 @@ export const Account = () => {
     e.preventDefault()
     if(skills.length === 0){
         toast({
+position: 'bottom-right',
             title: 'Skill box is empty!',
             status: 'error',
             duration: 9000,
