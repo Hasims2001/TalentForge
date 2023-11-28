@@ -1,4 +1,4 @@
-import { ERROR, LOADING, JOB_POSTED, JOB_GETTED, JOB_DELETED, JOB_UPDATED, RESET } from "../actionType";
+import { ERROR, LOADING, JOB_POSTED, JOB_GETTED, JOB_DELETED, JOB_UPDATED, RESET, APPLICATION_GETTED } from "../actionType";
 
 const init = {
     loading: false,
@@ -64,6 +64,12 @@ export const reducer = (state=init, {type, payload})=>{
                 loading: false,
                 jobposted: filterd,
                 "message": "Job post deleted successfully!"
+            }
+        case APPLICATION_GETTED:
+            return{
+                ...state,
+                loading: false,
+                applications: payload
             }
         default:
             return state

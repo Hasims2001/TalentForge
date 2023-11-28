@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Box, Flex, Text, Stack,Button, Image,useToast, Heading, Avatar} from '@chakra-ui/react'
+import {Box, Flex, Text, Stack,Button, useToast, Heading, Avatar} from '@chakra-ui/react'
 import {useDispatch, useSelector} from "react-redux"
 import { InputDesign } from '../Components/InputDesign';
 import { ButtonDesign } from '../Components/ButtonDesign';
