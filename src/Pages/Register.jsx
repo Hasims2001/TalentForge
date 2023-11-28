@@ -16,7 +16,7 @@ import { postRegisterRecruiter } from "../Redux/AuthReducer/action";
 import { postRegisterJobseeker } from "../Redux/AuthReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 import {useNavigate} from 'react-router-dom'
-import { RESET } from "../Redux/actionType";
+import {  RESET_AUTH } from "../Redux/actionType";
 export const Register = () => {
     const [page, setPage] = useState(1);
     const [data, setData] = useState({}); 
@@ -35,7 +35,7 @@ position: 'bottom-right',
         })
       }
       return ()=>{
-        dispatch({type: RESET})
+        dispatch({type: RESET_AUTH})
       }
     }, [error])
 
@@ -45,7 +45,7 @@ position: 'bottom-right',
             navigate("/login")
         }
         return ()=>{
-          dispatch({type: RESET})
+          dispatch({type: RESET_AUTH})
         }
     }, [message])
   const handleFormOne = (e) => {

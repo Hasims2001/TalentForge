@@ -19,14 +19,14 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllJobs, postJobApplication } from "../Redux/JobseekerReducer/action";
-import { RESET } from "../Redux/actionType";
+import { RESET_JOBSEEKER } from "../Redux/actionType";
 import { Flag } from "lucide-react";
 import { ContentNotFound } from "../Components/ContentNotFound";
 export const Jobs = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const reportRef = useRef();
-  const { jobs, error, message } = useSelector((store) => store.Jobseeker);
+  const { jobs, error } = useSelector((store) => store.Jobseeker);
   const { token, role } = useSelector((store) => store.Auth);
   const [reportId, setReportId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,25 +47,11 @@ export const Jobs = () => {
       });
     }
     return () => {
-      dispatch({ type: RESET });
+      dispatch({ type: RESET_JOBSEEKER });
     };
   }, [error]);
 
-  useEffect(() => {
-    if (message) {
-      toast({
-        position: "bottom-right",
-        title: message,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-    return () => {
-      dispatch({ type: RESET });
-    };
-  }, [message]);
-
+ 
   const handleApply = (job_id) => {
     if (role === "Jobseeker") {
       dispatch(postJobApplication({"job_posting_id": job_id}, token))
@@ -103,8 +89,8 @@ export const Jobs = () => {
       {jobs.length > 0 &&
         jobs.map((item) => (
           <Flex
-            justifyContent={"space-between"}
             key={item.id}
+            justifyContent={"space-between"}
             maxH={96}
             textOverflow={"ellipsis"}
             _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}

@@ -17,13 +17,13 @@ import { postLoginRecruiter } from "../Redux/AuthReducer/action";
 import { postLoginJobseeker } from "../Redux/AuthReducer/action";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { RESET } from "../Redux/actionType";
+import { RESET_AUTH } from "../Redux/actionType";
 export const Login = () => {
     const [data, setData] = useState()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const toast = useToast()
-    const {message, loading, error,  user, token} = useSelector(store=> store.Auth)
+    const { loading, error,  user, token} = useSelector(store=> store.Auth)
     useEffect(()=>{
       if(error){
         toast({
@@ -35,7 +35,7 @@ position: 'bottom-right',
         })
 
         return ()=>{
-          dispatch({type: RESET})
+          dispatch({type: RESET_AUTH})
         }
     }
     }, [error])

@@ -1,6 +1,8 @@
 export const LOADING = 'LOADING'
 export const ERROR = 'ERROR'
-export const RESET =  "RESET"
+export const RESET_AUTH =  "RESET_AUTH"
+export const RESET_JOBSEEKER = "RESET_JOBSEEKER"
+export const RESET_RECRUITER = "RESET_RECRUITER"
 export const RESETALL = "RESETALL"
 export const GETSUCCESS = 'GETSUCCESS'
 
@@ -20,3 +22,4 @@ export const APPLIED = 'APPLIED';
 
 export const ALL_JOBS_GETTED = "ALL_JOBS_GETTED";
 export const JOB_APPLIED = "JOB_APPLIED";
+export const APPLIED_JOB_APPLICATION = "APPLIED_JOB_APPLICATION";

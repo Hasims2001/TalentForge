@@ -9,6 +9,7 @@ import { JobPosts } from '../Pages/JobPosts'
 import { NewJobPost } from '../Pages/NewJobPost'
 import { JobPostsApplications } from '../Pages/JobPostsApplications'
 import { Jobs } from '../Pages/Jobs'
+import { Applications } from '../Pages/Applications'
 export const AllRouters = () => {
   return (
     <Routes>
@@ -22,6 +23,7 @@ export const AllRouters = () => {
         <Route path='/jobposts/:id/applications' element={<JobPostsApplications />}></Route>
         <Route path='/jobposts/create/job' element={<NewJobPost />}></Route>
         <Route path='/jobs' element={<Jobs />}></Route>
+        <Route path='/applications' element={<Applications />}></Route>
         <Route path='/*' element={<PageNotFound />}></Route>
     </Routes>
   )

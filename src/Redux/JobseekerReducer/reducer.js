@@ -1,4 +1,4 @@
-import { ALL_JOBS_GETTED, ERROR, JOB_APPLIED, LOADING, } from "../actionType";
+import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, JOB_APPLIED, LOADING, RESET_JOBSEEKER, } from "../actionType";
 const init = {
     loading: false,
     error: "",
@@ -21,6 +21,13 @@ export const reducer = (state=init, {type, payload})=>{
                 loading: false,
                 error: payload
             }
+        case RESET_JOBSEEKER:
+            return{
+                ...state,
+                loading: false,
+                error : "",
+                message: ""
+            }
         case ALL_JOBS_GETTED:
             return {
                 ...state,
@@ -39,6 +46,13 @@ export const reducer = (state=init, {type, payload})=>{
                     ...state.applied,
                     filteredApplied
                 ]
+            }
+        case APPLIED_JOB_APPLICATION:
+            return{
+                ...state,
+                loading: false,
+                applied: payload,
+                message: "applications got successfully!"
             }
         default:
             return state

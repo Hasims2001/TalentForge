@@ -6,10 +6,10 @@ import { ContentNotFound } from "../Components/ContentNotFound";
 import { getJobApplications, updateJobApplications } from "../Redux/RecruiterReducer/action";
 import {CircleDot, CheckCheck, Eye, PhoneOutgoing, CopyX} from "lucide-react"
 import { ApplicationView } from "../Components/ApplicationView";
-import { RESET } from "../Redux/actionType";
+import { RESET_RECRUITER } from "../Redux/actionType";
 export const JobPostsApplications = () => {
   const params = useParams();
-  const {  error, message, jobposted, applications } = useSelector((store) => store.Recruiter);
+  const {  error, jobposted, applications } = useSelector((store) => store.Recruiter);
 
   const {token} = useSelector(store=> store.Auth)
   const [currentJob, setCurrentJob] = useState(null);
@@ -32,24 +32,10 @@ position: 'bottom-right',
       })
     }
     return ()=>{
-      dispatch({type: RESET})
+      dispatch({type: RESET_RECRUITER})
     }
   }, [error])
 
-  useEffect(()=>{
-    if(message === "Application udpated successfully!"){
-      toast({
-position: 'bottom-right',
-        title: message,
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      })
-    }
-    return ()=>{
-      dispatch({type: RESET})
-    }
-  }, [message])
   const handleUpdate = (id, status)=>{
     dispatch(updateJobApplications( {status: status}, id, token))
   }

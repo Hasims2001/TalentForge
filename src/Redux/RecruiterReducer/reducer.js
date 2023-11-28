@@ -5,9 +5,10 @@ import {
   JOB_GETTED,
   JOB_DELETED,
   JOB_UPDATED,
-  RESET,
+  
   APPLICATION_GETTED,
   APPLICATION_UPDATED,
+  RESET_RECRUITER,
 } from "../actionType";
 
 const init = {
@@ -30,7 +31,7 @@ export const reducer = (state = init, { type, payload }) => {
         loading: false,
         error: payload,
       };
-    case RESET:
+    case RESET_RECRUITER:
       return {
         ...state,
         error: "",

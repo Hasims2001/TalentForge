@@ -14,7 +14,7 @@ import { ButtonDesign } from "../Components/ButtonDesign";
 import { XCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { postNewJobpost } from "../Redux/RecruiterReducer/action";
-import { RESET } from "../Redux/actionType";
+import { RESET_RECRUITER } from "../Redux/actionType";
 import { useNavigate } from "react-router-dom";
 export const NewJobPost = () => {
   const {  token  } = useSelector((store) => store.Auth);
@@ -35,7 +35,7 @@ position: 'bottom-right',
       })
     }
     return ()=>{
-      dispatch({type: RESET})
+      dispatch({type: RESET_RECRUITER})
     }
   }, [error])
 
@@ -51,7 +51,7 @@ position: 'bottom-right',
       navigate("/jobposts")
     }
     return ()=>{
-      dispatch({type: RESET})
+      dispatch({type: RESET_RECRUITER})
     }
   }, [message])
 
