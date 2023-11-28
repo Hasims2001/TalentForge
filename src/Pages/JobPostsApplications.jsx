@@ -1,22 +1,45 @@
-import { Box, Heading, Text, Stack, Button, Flex } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
+import { Box, Heading, Text, Stack, useToast} from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ContentNotFound } from "../Components/ContentNotFound";
-import { getJobApplications } from "../Redux/RecruiterReducer/action";
+import { getJobApplications, updateJobApplications } from "../Redux/RecruiterReducer/action";
+import {CircleDot, CheckCheck, Eye, PhoneOutgoing, CopyX} from "lucide-react"
+import { ApplicationView } from "../Components/ApplicationView";
+import { RESET_RECRUITER } from "../Redux/actionType";
 export const JobPostsApplications = () => {
   const params = useParams();
-  const { jobposted, applications } = useSelector((store) => store.Recruiter);
+  const {  error, jobposted, applications } = useSelector((store) => store.Recruiter);
+
   const {token} = useSelector(store=> store.Auth)
   const [currentJob, setCurrentJob] = useState(null);
   const dispatch = useDispatch()
+  const toast= useToast()
   useEffect(() => {
     dispatch(getJobApplications(+params.id, token))    
     let filtered = jobposted.filter((item) => item.id === +params.id);
     setCurrentJob(filtered[0]);
   }, []);
-  console.log(applications)
+  
+  useEffect(()=>{
+    if(error){
+      toast({
+position: 'bottom-right',
+        title: error,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+    return ()=>{
+      dispatch({type: RESET_RECRUITER})
+    }
+  }, [error])
 
+  const handleUpdate = (id, status)=>{
+    dispatch(updateJobApplications( {status: status}, id, token))
+  }
+ 
   return (
     <Box my={12}>
       {currentJob ? (
@@ -28,18 +51,26 @@ export const JobPostsApplications = () => {
             <Text as={"i"}>Get talent employee!</Text>
           </Box>
           <Stack my={6}>
-          {applications.length > 0 && applications.map(({job_seeker, status}, ind)=> (
-            <Flex justifyContent={'space-between'} px={12} py={10} boxShadow={'lg'} borderRadius={12} key={ind}>
-             <Box>
-             <Heading as={"h4"} fontSize={20}>
-               {job_seeker.name}
-              </Heading>
-             </Box>
-             <Stack>
-              <Button>Update</Button>
-             </Stack>
-            </Flex>
-          ))}
+          {applications.length > 0 && applications.map(({id, timestamp, job_seeker, status})=> {
+            let Icon;
+            if(status === "Pending"){
+              Icon = <CircleDot color="#ffff00" strokeWidth={3} />
+            }else if(status === "Application Viewed"){
+              Icon = <Eye size={20} color="#0062ff" strokeWidth={3} />
+            }else if(status === "Connected with Applicant"){
+              Icon = <PhoneOutgoing size={20} color="#009dff" strokeWidth={3} />
+            }else if(status === "Accepted"){
+              Icon = <CheckCheck size={20} color="#013220" strokeWidth={3} />
+            }else if(status === "Rejected"){
+              Icon = <CopyX size={20} color="#ff0000" strokeWidth={3} />
+            }else{
+              Icon = <CircleDot color="#ffff00" strokeWidth={3} />
+            }
+            return (
+                <ApplicationView key={id} job_seeker={job_seeker} status={status} ind={id} Icon={Icon}  timestamp={timestamp} handleUpdate={handleUpdate}/>
+            )
+          })}
+          {applications.length === 0 && <ContentNotFound msg="No applications found" />}
           </Stack>
         </>
       ) : (

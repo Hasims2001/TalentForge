@@ -14,7 +14,7 @@ import { ButtonDesign } from "../Components/ButtonDesign";
 import { XCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { postNewJobpost } from "../Redux/RecruiterReducer/action";
-import { RESET } from "../Redux/actionType";
+import { RESET_RECRUITER } from "../Redux/actionType";
 import { useNavigate } from "react-router-dom";
 export const NewJobPost = () => {
   const {  token  } = useSelector((store) => store.Auth);
@@ -27,6 +27,7 @@ export const NewJobPost = () => {
   useEffect(()=>{
     if(error){
       toast({
+position: 'bottom-right',
         title: error,
         status: 'error',
         duration: 9000,
@@ -34,13 +35,14 @@ export const NewJobPost = () => {
       })
     }
     return ()=>{
-      dispatch({type: RESET})
+      dispatch({type: RESET_RECRUITER})
     }
   }, [error])
 
   useEffect(()=>{
     if(message === "Job posted successfully!"){
       toast({
+position: 'bottom-right',
         title: message,
         status: 'success',
         duration: 9000,
@@ -49,7 +51,7 @@ export const NewJobPost = () => {
       navigate("/jobposts")
     }
     return ()=>{
-      dispatch({type: RESET})
+      dispatch({type: RESET_RECRUITER})
     }
   }, [message])
 

@@ -19,16 +19,20 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteJobPost, getJobPost, updateJobPost } from "../Redux/RecruiterReducer/action";
-import { RESET } from "../Redux/actionType";
+import {
+  deleteJobPost,
+  getJobPost,
+  updateJobPost,
+} from "../Redux/RecruiterReducer/action";
+import { RESET_RECRUITER } from "../Redux/actionType";
 import { ButtonDesign } from "../Components/ButtonDesign";
 import { InputDesign } from "../Components/InputDesign";
 import { XCircle } from "lucide-react";
 export const JobPosts = () => {
-  const { loading, jobposted, error, message } = useSelector(
+  const { loading, jobposted, error } = useSelector(
     (store) => store.Recruiter
   );
-  const { token } = useSelector((store) => store.Auth);
+  const { token, user } = useSelector((store) => store.Auth);
   const dispatch = useDispatch();
   const [skills, setSkills] = useState(new Set());
   const [prefSkills, setPrefSkills] = useState(new Set());
@@ -37,13 +41,14 @@ export const JobPosts = () => {
   const toast = useToast();
   useEffect(() => {
     if (jobposted.length === 0) {
-      dispatch(getJobPost(token));
+      dispatch(getJobPost(user.id, token));
     }
   }, []);
 
   useEffect(() => {
     if (error) {
       toast({
+        position: "bottom-right",
         title: error,
         status: "error",
         duration: 9000,
@@ -51,36 +56,23 @@ export const JobPosts = () => {
       });
     }
     return () => {
-      dispatch({ type: RESET });
+      dispatch({ type: RESET_RECRUITER });
     };
   }, [error]);
 
-  useEffect(() => {
-    if (message) {
-      toast({
-        title: message,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      onClose()
-    }
-    return () => {
-      dispatch({ type: RESET });
-    };
-  }, [message]);
+
   const handleEdit = (ind) => {
     let filtered = jobposted.filter((item) => item.id === ind);
     let curr = filtered[0];
-    setSkills(curr.required_skills.split(","))
-    setPrefSkills(curr.prefered_skills.split(","))
+    setSkills(curr.required_skills.split(","));
+    setPrefSkills(curr.prefered_skills.split(","));
     setEditPost(curr);
     onOpen();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let id = editPost.id
+    let id = editPost.id;
     let obj = {
       job_title: e.target.title.value,
       salary: e.target.salary.value,
@@ -95,10 +87,9 @@ export const JobPosts = () => {
       description: e.target.description.value,
       required_skills: Array.from(skills).join(","),
       prefered_skills: Array.from(prefSkills).join(","),
-    }
+    };
 
-    dispatch(updateJobPost(obj, id, token))
-   
+    dispatch(updateJobPost(obj, id, token));
   };
   const handleDelete = (ind) => {
     dispatch(deleteJobPost(ind, token));
@@ -184,7 +175,13 @@ export const JobPosts = () => {
                   Expected Salary: {item.salary}
                 </Text>
                 <Stack gap={4}>
-                <Button colorScheme="green" as={Link} to={`/jobposts/${item.id}/applications`}>View applications</Button>
+                  <Button
+                    colorScheme="green"
+                    as={Link}
+                    to={`/jobposts/${item.id}/applications`}
+                  >
+                    View applications
+                  </Button>
                   <Button onClick={() => handleEdit(item.id)}>Edit</Button>
                   <Button
                     colorScheme="red"

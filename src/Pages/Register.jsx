@@ -16,7 +16,7 @@ import { postRegisterRecruiter } from "../Redux/AuthReducer/action";
 import { postRegisterJobseeker } from "../Redux/AuthReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 import {useNavigate} from 'react-router-dom'
-import { RESET } from "../Redux/actionType";
+import {  RESET_AUTH } from "../Redux/actionType";
 export const Register = () => {
     const [page, setPage] = useState(1);
     const [data, setData] = useState({}); 
@@ -27,6 +27,7 @@ export const Register = () => {
     useEffect(()=>{
       if(error){
         toast({
+position: 'bottom-right',
           title: error,
           status: 'error',
           duration: 9000,
@@ -34,7 +35,7 @@ export const Register = () => {
         })
       }
       return ()=>{
-        dispatch({type: RESET})
+        dispatch({type: RESET_AUTH})
       }
     }, [error])
 
@@ -44,7 +45,7 @@ export const Register = () => {
             navigate("/login")
         }
         return ()=>{
-          dispatch({type: RESET})
+          dispatch({type: RESET_AUTH})
         }
     }, [message])
   const handleFormOne = (e) => {
