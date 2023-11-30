@@ -13,12 +13,51 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import { InputDesign } from "../Components/InputDesign";
-import { Paintbrush,MapPin, MoveRight, Factory } from "lucide-react";
+import { Paintbrush,MapPin, MoveRight, Factory, Computer, DatabaseBackup,CircleDollarSign, PercentCircle } from "lucide-react";
 import OffersImg from "../Assets/search.png";
 import companies from "../Assets/companies.png"
 import companiesTwo from '../Assets/companies-two.png';
 import svgIconLite from '../Assets/svgBGlite.png';
+import {useNavigate} from 'react-router-dom'
+
+const categories = [
+  {
+    "id": 1,
+    "Icon": <Paintbrush size={28} />,
+    "name": "Designer"
+  },
+  {
+    "id": 2,
+    "Icon": <Factory size={28} />,
+    "name": "Business"
+  },
+  {
+    "id": 3,
+    "Icon": <Computer size={28} />,
+    "name": "Software"
+  },
+  {
+    "id": 4,
+    "Icon": <PercentCircle size={28} />,
+    "name": "SEO Expert"
+  },
+  {
+    "id": 5,
+    "Icon": <DatabaseBackup size={28} />,
+    "name": "Data Analytics"
+  },
+  {
+    "id": 6,
+    "Icon": <CircleDollarSign size={28} />,
+    "name": "Marketing"
+  },
+
+]
 export const Home = () => {
+  const navigate = useNavigate()
+  const handleCategory = (category_name)=>{
+    navigate(`/jobs/${category_name}`)
+  }
   return (
     <Box px={12} mx={-12}>
       {/* section 1 */}
@@ -91,142 +130,33 @@ export const Home = () => {
           </Flex>
         </Flex>
         <Flex flexWrap={"wrap"} gap={12}>
-          <Box
-            bgColor={"brand.140"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-            cursor={"pointer"}
-            p={12}
-            borderRadius={12}
-            textAlign={"center"}
-          >
-            <Box
-              textAlign={"center"}
-              p={6}
-              borderRadius={"full"}
-              _hover={{
-                transform: "rotate(-50deg)",
-                transition: "all 0.5s ease",
-              }}
-            >
-              <Paintbrush size={28} />
-            </Box>
-            <Text mt={4}>Designer</Text>
-          </Box>
+         {categories.map(({id, name, Icon})=>(
+           <Box
+           key={id}
+           bgColor={"brand.140"}
+           _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+           minW={50}
+           cursor={"pointer"}
+           p={12}
+           borderRadius={12}
+           textAlign={"center"}
+           onClick={()=>handleCategory(name)}
+         >
+           <Box
+             p={6}
+             margin={'0 auto'}
+             borderRadius={"full"}
+             _hover={{
+               transform: "rotate(-50deg)",
+               transition: "all 0.5s ease",
+             }}
+           >
+             {Icon}
+           </Box>
+           <Text mt={4}>{name}</Text>
+         </Box>
+         ))}
 
-          <Box
-            bgColor={"brand.1000"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-            cursor={"pointer"}
-            p={12}
-            borderRadius={12}
-            textAlign={"center"}
-          >
-            <Box
-              textAlign={"center"}
-              p={6}
-              borderRadius={"full"}
-              _hover={{
-                transform: "rotate(-50deg)",
-                bg: "brand.500",
-                transition: "all 0.5s ease",
-              }}
-            >
-              <Paintbrush size={28} />
-            </Box>
-            <Text mt={4}>Designer</Text>
-          </Box>
-
-          <Box
-            bgColor={"brand.1000"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-            cursor={"pointer"}
-            p={12}
-            borderRadius={12}
-            textAlign={"center"}
-          >
-            <Box
-              textAlign={"center"}
-              p={6}
-              borderRadius={"full"}
-              _hover={{
-                transform: "rotate(-50deg)",
-                bg: "brand.500",
-                transition: "all 0.5s ease",
-              }}
-            >
-              <Paintbrush size={28} />
-            </Box>
-            <Text mt={4}>Designer</Text>
-          </Box>
-
-          <Box
-            bgColor={"brand.1000"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-            cursor={"pointer"}
-            p={12}
-            borderRadius={12}
-            textAlign={"center"}
-          >
-            <Box
-              textAlign={"center"}
-              p={6}
-              borderRadius={"full"}
-              _hover={{
-                transform: "rotate(-50deg)",
-                bg: "brand.500",
-                transition: "all 0.5s ease",
-              }}
-            >
-              <Paintbrush size={28} />
-            </Box>
-            <Text mt={4}>Designer</Text>
-          </Box>
-
-          <Box
-            bgColor={"brand.1000"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-            cursor={"pointer"}
-            p={12}
-            borderRadius={12}
-            textAlign={"center"}
-          >
-            <Box
-              textAlign={"center"}
-              p={6}
-              borderRadius={"full"}
-              _hover={{
-                transform: "rotate(-50deg)",
-                bg: "brand.500",
-                transition: "all 0.5s ease",
-              }}
-            >
-              <Paintbrush size={28} />
-            </Box>
-            <Text mt={4}>Designer</Text>
-          </Box>
-
-          <Box
-            bgColor={"brand.1000"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-            cursor={"pointer"}
-            p={12}
-            borderRadius={12}
-            textAlign={"center"}
-          >
-            <Box
-              textAlign={"center"}
-              p={6}
-              borderRadius={"full"}
-              _hover={{
-                transform: "rotate(-50deg)",
-                bg: "brand.500",
-                transition: "all 0.5s ease",
-              }}
-            >
-              <Paintbrush size={28} />
-            </Box>
-            <Text mt={4}>Designer</Text>
-          </Box>
         </Flex>
       </Box>
 

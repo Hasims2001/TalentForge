@@ -83,6 +83,7 @@ position: 'bottom-right',
     let name = e.target.name.value;    
     let email = e.target.email.value;
     let company_name = e.target.company_name.value;
+    let company_logo = e.target.company_logo.value;
     let company_description = e.target.company_description.value;
     let currentjobrole = e.target.currentjobrole.value;
     let founded = +e.target.founded.value;
@@ -91,10 +92,10 @@ position: 'bottom-right',
     let city = e.target.city.value;
     let state = e.target.state.value;
 
-    if(name === "" || email === "" || company_name === "" || company_description === "" || currentjobrole === "" || founded === "" || website === "" || company_size === "" || city === "" || state === ""){
+    if(name === "" || email === "" || company_name === "" || company_description === "" || currentjobrole === "" || founded === "" || website === "" || company_size === "" || city === "" || state === "" || company_logo === ""){
       errorToast()
     }else{
-      makeUpdateRequest({name, email, company_name, company_description, currentjobrole, founded, website, company_size, city, state})
+      makeUpdateRequest({name, email, company_name,company_logo, company_description, currentjobrole, founded, website, company_size, city, state})
     }
 
 
@@ -230,6 +231,7 @@ position: 'bottom-right',
                 <InputDesign ids="name" types={'text'} name="Name" values={`${user.name || ""}`}></InputDesign>
                 <InputDesign ids="email" types={'email'} name="Email" values={`${user.email || ""}`}></InputDesign>
                 <InputDesign ids="company_name" types={'text'} name="Company name" values={`${user.company_name || ""}`}></InputDesign>
+                <InputDesign ids="company_logo" types={'text'} name="Company logo url" values={`${user.company_logo || ""}`}></InputDesign>
                 <InputDesign ids="company_description" types={'text'} name="Company description" values={`${user.company_description || ""}`}></InputDesign>
                 <InputDesign ids="currentjobrole" types={'text'} name="Current job role" values={`${user.current_jobrole || ""}`}></InputDesign>
                 <InputDesign ids="founded" types={'number'} name="Founded (YYYY)" values={`${user.founded || ""}`}></InputDesign>

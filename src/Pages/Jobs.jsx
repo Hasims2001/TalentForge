@@ -18,9 +18,10 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllJobs, postJobApplication } from "../Redux/JobseekerReducer/action";
+import { getAllJobs, getAllJobsByCategory, postJobApplication } from "../Redux/JobseekerReducer/action";
 import { RESET_JOBSEEKER } from "../Redux/actionType";
 import { Flag } from "lucide-react";
+import {useParams} from "react-router-dom"
 import { ContentNotFound } from "../Components/ContentNotFound";
 export const Jobs = () => {
   const dispatch = useDispatch();
@@ -28,10 +29,13 @@ export const Jobs = () => {
   const reportRef = useRef();
   const { jobs, error } = useSelector((store) => store.Jobseeker);
   const { token, role } = useSelector((store) => store.Auth);
+  const params = useParams()
   const [reportId, setReportId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
-    if (jobs.length === 0) {
+    if(params.category){
+      dispatch(getAllJobsByCategory(params.category, token));
+    }else if (jobs.length === 0) {
       dispatch(getAllJobs(token));
     }
   }, []);
@@ -51,7 +55,7 @@ export const Jobs = () => {
     };
   }, [error]);
 
- 
+
   const handleApply = (job_id) => {
     if (role === "Jobseeker") {
       dispatch(postJobApplication({"job_posting_id": job_id}, token))
