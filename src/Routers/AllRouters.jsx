@@ -23,6 +23,7 @@ export const AllRouters = () => {
         <Route path='/jobposts/:id/applications' element={<JobPostsApplications />}></Route>
         <Route path='/jobposts/create/job' element={<NewJobPost />}></Route>
         <Route path='/jobs' element={<Jobs />}></Route>
+        <Route path='/jobs/:category' element={<Jobs />}></Route>
         <Route path='/applications' element={<Applications />}></Route>
         <Route path='/*' element={<PageNotFound />}></Route>
     </Routes>
