@@ -25,7 +25,7 @@ export const Account = () => {
   }, [error])
 
   useEffect(()=>{
-    if(user.skills.length > 0){
+    if(user.role === "Jobseeker" &&  user.skills.length > 0){
       setSkills(new Set(user.skills))
     }
   }, [user])

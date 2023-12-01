@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Talent Forge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Talent Forge, Our cutting-edge job matching platform leverages the power of GenAI integration, empowering recruiters to effortlessly connect with ideal candidates and enabling job seekers to discover tailored opportunities aligned with their unique skills and experience. Transform your hiring process and career journey with Talent Forge today!
 
-## Available Scripts
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#Tech-stack)
+- [Project Links](#Project-links)
+- [Screenshot](#Screenshot)
+- [Installation](#installation)
+- [Project Memebers](#Project-team)
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Chatbot integration using GenAI.
+- User Authentication
+- Recruiter can post, add, update, and delete their job posts
+- Jobseeker can apply on job posts, can update their profile, can also view the status of application
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `npm run build`
+- Front-end:
+  - Chakra UI for a visually appealing and responsive user interface.
+  - React.js for building dynamic and interactive components.
+- Back-end:
+  - MySQL for storing job posts, applications, skillsets and user data.
+  - Flask for handling server-side logic.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Links
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Front-end:
 
-### `npm run eject`
+- **Website URL:** [https://talentforge.netlify.app](https://talentforge.netlify.app/)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Admin Login:** Email: admin@admin.com | Password: admin
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Back-end:
+- **Github:** [https://github.com/Hasims2001/TalentForge-API](https://github.com/Hasims2001/TalentForge-API) 
+- **Server:** [https://recipeswap.onrender.com](https://recipeswap.onrender.com/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Screenshot
+### User Side:
+![1](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/2b7f5a2c-18ed-4d0b-8e7d-281c8e99fb46)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![2](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/36e41b57-0ed6-4e18-8de8-fddec9f14cdb)
 
-## Learn More
+![3](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/0e67dab5-8848-4f78-9aba-e429908d4076)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![4](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/d58f7302-122d-4afb-9fae-f7798ef09b83)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![5](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/f90b7a9e-ab1a-49ee-bef8-f3a3752c4592)
 
-### Code Splitting
+![6](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/e2d6ba64-cc88-4f80-83cf-da01b6ff32fd)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![7](https://github.com/Manikantkr-1004/warlike-current-5989/assets/58412185/a3ddca74-8886-499b-a45d-b62a2d7190af)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Installation
+To set up the project locally, follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Clone the repository:
 
-### Advanced Configuration
+```bash
+git clone https://github.com/Hasims2001/TalentForge.git
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+2. Open the TalentForge folder in termial:
+```bash
+cd TalentForge
+```
 
-### Deployment
+3. Run command:
+```
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+4. Run project
+```
+npm start
+```
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Feel free to explore the project using the provided links and discover the jobs or telents!

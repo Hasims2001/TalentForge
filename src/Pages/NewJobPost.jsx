@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   Textarea,
+  Select,
   useToast
 } from "@chakra-ui/react";
 import { InputDesign } from "../Components/InputDesign";
@@ -231,8 +232,15 @@ position: 'bottom-right',
           </Flex>
           <InputDesign  ids={"graduation"} name="Graduation" types={'text'} placeholderValue="Ex. Btech" helperText={"if required only"} req={false}></InputDesign>
           <InputDesign  ids={"postGraduation"} name="Post graduation" types={'text'} placeholderValue="Ex. Mtech" helperText={"if required only"} req={false}></InputDesign>
-          
-          <InputDesign  ids={"role_category"} name="Role Category" types={'text'} placeholderValue="Ex. Designer" helperText={"Role category"}></InputDesign>
+          <Select id="role_category" my={4}>
+            <option value={""}>Choose the Category</option>
+            <option value={"Designer"}>Designer</option>
+            <option value={"Business"}>Business</option>
+            <option value={"Software"}>Software</option>
+            <option value={"SEO Expert"}>SEO Expert</option>
+            <option value={"Data Analytics"}>Data Analytics</option>
+            <option value={"Marketing"}>Marketing</option>
+          </Select>
           <InputDesign  ids={"experience"} name="Experience (yearly)" types={'text'} placeholderValue="Ex. 0-1" helperText={"if required only otherwise 0."}></InputDesign>
           <InputDesign  ids={"employment_type"} name="Employment type" types={'text'} placeholderValue="Ex. Full time" helperText={"Full time, Part time, internship."}></InputDesign>
           <InputDesign  ids={"openings"} name="Openings" types={'number'} placeholderValue="Ex. 10" helperText={"Total number of openings"}></InputDesign>

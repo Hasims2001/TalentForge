@@ -29,7 +29,7 @@ import { ButtonDesign } from "../Components/ButtonDesign";
 import { InputDesign } from "../Components/InputDesign";
 import { XCircle } from "lucide-react";
 export const JobPosts = () => {
-  const { loading, jobposted, error } = useSelector(
+  const { loading, jobposted, error,message } = useSelector(
     (store) => store.Recruiter
   );
   const { token, user } = useSelector((store) => store.Auth);
@@ -60,7 +60,21 @@ export const JobPosts = () => {
     };
   }, [error]);
 
-
+  useEffect(()=>{
+    if(message === "Job post updated successfully!"){
+      toast({
+        position: "bottom-right",
+        title: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      onClose()
+    }
+    return () => {
+      dispatch({ type: RESET_RECRUITER });
+    };
+  }, [message])
   const handleEdit = (ind) => {
     let filtered = jobposted.filter((item) => item.id === ind);
     let curr = filtered[0];
