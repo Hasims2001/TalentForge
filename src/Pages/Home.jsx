@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import HomeImg from "../Assets/home.png";
 import {
   Box,
   Flex,
   Image,
   Heading,
+  Input,
   Text,
   Select,
   Stack,
   Button,
   Grid,
   GridItem,
+  useToast,
 } from "@chakra-ui/react";
 import { InputDesign } from "../Components/InputDesign";
-import { Paintbrush,MapPin, MoveRight, Factory, Computer, DatabaseBackup,CircleDollarSign, PercentCircle } from "lucide-react";
+import { Paintbrush,MapPin, MoveRight, Factory, Computer, DatabaseBackup,CircleDollarSign, PercentCircle , X} from "lucide-react";
 import OffersImg from "../Assets/search.png";
 import companies from "../Assets/companies.png"
 import companiesTwo from '../Assets/companies-two.png';
 import svgIconLite from '../Assets/svgBGlite.png';
 import {useNavigate} from 'react-router-dom'
-
+import chatbotImg from "../Assets/chatboat.png";
+import closeImage from "../Assets/close.png";
+import {useSelector} from "react-redux"
 const categories = [
   {
     "id": 1,
@@ -58,6 +62,34 @@ export const Home = () => {
   const handleCategory = (category_name)=>{
     navigate(`/jobs/${category_name}`)
   }
+  const toast = useToast()
+  const {user} = useSelector(store=> store.Auth)
+  const [chat, setChat] = useState([`Hello ${user.name || ""}!\nHow can I help you?`])
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSend = ()=>{
+    let query = document.querySelector("#query").value;
+    if(query){
+      setChat([
+        ...chat,
+        query
+      ])
+    }
+   
+  }
+  const handleOpen =()=>{
+    if(user.name){
+      setIsOpen(!isOpen)
+    }else{
+      toast({
+        title: "Please login first!",
+        status: "info",
+        duration: 9000,
+        isClosable: true
+      })
+    }
+  }
+  console.log(user)
   return (
     <Box px={12} mx={-12}>
       {/* section 1 */}
@@ -221,9 +253,9 @@ export const Home = () => {
             <Text>Full-time</Text>
              </Flex>
              <Text  mt={24} p={-12} w={"100%"} borderTop={"1px solid #c7c7c7"}></Text>
-            <Flex gap={12}>
+            <Flex justifyContent={'space-between'}>
             <Stack >
-              <Text>1 day ago</Text>
+              <Text>2 day ago</Text>
               <Text as={'b'} fontSize={18}>Logitech Group</Text>
              </Stack>
              <Image w={"5vw"} objectFit={'contain'} src="https://media.wired.com/photos/59549ff18e8cc150fa8ec6c2/master/w_1600%2Cc_limit/Logi_RGB-copy.jpg" alt="Logitech Group" />
@@ -238,21 +270,48 @@ export const Home = () => {
             _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
           >
             <Flex gap={4}>
-            <Factory color="#ff7300" />
-            <Text>Bussiness Development</Text>
+            <Computer color="#0000FF" />
+            <Text>Software Development</Text>
               </Flex> 
-              <Text mt={4} fontSize={24} as={'b'}>Operation Manager</Text>
+              <Text mt={4} fontSize={24} as={'b'}>Android Developer</Text>
              <Flex gap={6}>
-            <Flex> <MapPin color="#19d600" />&nbsp;Mumbai</Flex>
+            <Flex> <MapPin color="#19d600" />&nbsp;Delhi</Flex>
             <Text>Full-time</Text>
              </Flex>
              <Text  mt={24} p={-12} w={"100%"} borderTop={"1px solid #c7c7c7"}></Text>
-            <Flex gap={12}>
+            <Flex justifyContent={'space-between'}>
             <Stack >
               <Text>1 day ago</Text>
-              <Text as={'b'} fontSize={18}>Logitech Group</Text>
+              <Text as={'b'} fontSize={18}>Newgen Software</Text>
              </Stack>
-             <Image w={"5vw"} objectFit={'contain'} src="https://media.wired.com/photos/59549ff18e8cc150fa8ec6c2/master/w_1600%2Cc_limit/Logi_RGB-copy.jpg" alt="Logitech Group" />
+             <Image w={"5vw"} objectFit={'contain'} src="https://contentstatic.techgig.com/photo/102076932/newgen-plans-to-hire-500-techies-for-expansion-as-revenue-soars-by-34.jpg?11590" alt="Logitech Group" />
+            </Flex>
+          </Stack>
+          <Stack
+            p={12}
+            borderRadius={12}
+            boxShadow={"lg"}
+            bgColor={"brand.100"}
+            zIndex={2}
+            cursor={"pointer"}
+            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+          >
+            <Flex gap={4}>
+            <Paintbrush color="#FF0000" />
+            <Text>Designer</Text>
+              </Flex> 
+              <Text mt={4} fontSize={24} as={'b'}>UI-UX Designer</Text>
+             <Flex gap={6}>
+            <Flex> <MapPin color="#19d600" />&nbsp;Hydrabad</Flex>
+            <Text>Internship</Text>
+             </Flex>
+             <Text  mt={24} p={-12} w={"100%"} borderTop={"1px solid #c7c7c7"}></Text>
+            <Flex justifyContent={'space-between'}>
+            <Stack >
+              <Text>1 day ago</Text>
+              <Text as={'b'} fontSize={18}>Microsoft</Text>
+             </Stack>
+             <Image w={"5vw"} objectFit={'contain'} src="https://www.freepnglogos.com/uploads/microsoft-logo-png-transparent-background-1.png" alt="Microsoft" />
             </Flex>
           </Stack>
           <Stack
@@ -266,47 +325,20 @@ export const Home = () => {
           >
             <Flex gap={4}>
             <Factory color="#ff7300" />
-            <Text>Bussiness Development</Text>
+            <Text>Marketing</Text>
               </Flex> 
-              <Text mt={4} fontSize={24} as={'b'}>Operation Manager</Text>
+              <Text mt={4} fontSize={24} as={'b'}>Facebook Ads</Text>
              <Flex gap={6}>
-            <Flex> <MapPin color="#19d600" />&nbsp;Mumbai</Flex>
+            <Flex> <MapPin color="#19d600" />&nbsp;Bangluru</Flex>
             <Text>Full-time</Text>
              </Flex>
              <Text  mt={24} p={-12} w={"100%"} borderTop={"1px solid #c7c7c7"}></Text>
-            <Flex gap={12}>
+            <Flex justifyContent={'space-between'}>
             <Stack >
-              <Text>1 day ago</Text>
-              <Text as={'b'} fontSize={18}>Logitech Group</Text>
+              <Text>3 day ago</Text>
+              <Text as={'b'} fontSize={18}>Inspiron Labs</Text>
              </Stack>
-             <Image w={"5vw"} objectFit={'contain'} src="https://media.wired.com/photos/59549ff18e8cc150fa8ec6c2/master/w_1600%2Cc_limit/Logi_RGB-copy.jpg" alt="Logitech Group" />
-            </Flex>
-          </Stack>
-          <Stack
-            p={12}
-            borderRadius={12}
-            boxShadow={"lg"}
-            bgColor={"brand.100"}
-            zIndex={2}
-            cursor={"pointer"}
-            _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-          >
-            <Flex gap={4}>
-            <Factory color="#ff7300" />
-            <Text>Bussiness Development</Text>
-              </Flex> 
-              <Text mt={4} fontSize={24} as={'b'}>Operation Manager</Text>
-             <Flex gap={6}>
-            <Flex> <MapPin color="#19d600" />&nbsp;Mumbai</Flex>
-            <Text>Full-time</Text>
-             </Flex>
-             <Text  mt={24} p={-12} w={"100%"} borderTop={"1px solid #c7c7c7"}></Text>
-            <Flex gap={12}>
-            <Stack >
-              <Text>1 day ago</Text>
-              <Text as={'b'} fontSize={18}>Logitech Group</Text>
-             </Stack>
-             <Image w={"5vw"} objectFit={'contain'} src="https://media.wired.com/photos/59549ff18e8cc150fa8ec6c2/master/w_1600%2Cc_limit/Logi_RGB-copy.jpg" alt="Logitech Group" />
+             <Image w={"5vw"} objectFit={'contain'} src="https://www.inspironlabs.com/assets/img/logo/logo.svg" alt="Logitech Group" />
             </Flex>
           </Stack>
         </Grid>
@@ -323,15 +355,15 @@ export const Home = () => {
             <Image src={companiesTwo} w={"15%"}  borderRadius={12} top={"30rem"} alt="companies" pos={'absolute'}  left={48}  />
             <Grid templateColumns="repeat(2, 1fr)" gap={6}>
               <GridItem maxW={"90%"}>
-                <Box p={12} borderRadius={12} boxShadow={"lg"} bgColor={"brand.100"} zIndex={2} cursor={"pointer"} _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}>
-                <Image w={"5vw"} objectFit={'contain'} src="https://media.wired.com/photos/59549ff18e8cc150fa8ec6c2/master/w_1600%2Cc_limit/Logi_RGB-copy.jpg" alt="Logitech Group" />
-                <Text as={'b'}>Logitech Group</Text>
+                <Stack p={12} borderRadius={12} boxShadow={"lg"} bgColor={"brand.100"} zIndex={2} cursor={"pointer"} _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}>
+                <Image w={"10vw"} objectFit={'contain'} src="https://www.inspironlabs.com/assets/img/logo/logo.svg" alt="inspiron labs" />
+                <Text  mt={2} as={'b'}>Inspiron labs</Text>
                 <Text mt={12} color={"brand.130"}>Loremrem ipsum dolor sit amet consectetur adipisicing elit. Loremrem ipsum Loremrem ipsum dolor sit amet consectetur adipisicing elit. Loremrem ipsum Loremrem ipsum dolor sit. </Text>
                <Flex mt={6} gap={8}>
-               <Flex > <MapPin color="#19d600" />&nbsp;Mumbai</Flex>
-               <Text as={'b'} color={"brand.600"}>3 jobs</Text>
+               <Flex > <MapPin color="#19d600" />&nbsp;Bangluru</Flex>
+               <Text as={'b'} color={"brand.600"}>4 jobs</Text>
                </Flex>
-                </Box>
+                </Stack>
               </GridItem>
               <GridItem maxW={"90%"}>
                 <Box p={12} borderRadius={12} boxShadow={"lg"} bgColor={"brand.100"} zIndex={2} cursor={"pointer"} _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}>
@@ -346,17 +378,50 @@ export const Home = () => {
               </GridItem>
               <GridItem maxW={"90%"}>
                 <Box p={12} borderRadius={12} boxShadow={"lg"} bgColor={"brand.100"} zIndex={2} cursor={"pointer"} _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}>
-                <Image w={"5vw"} objectFit={'contain'} src="https://media.wired.com/photos/59549ff18e8cc150fa8ec6c2/master/w_1600%2Cc_limit/Logi_RGB-copy.jpg" alt="Logitech Group" />
-                <Text as={'b'}>Logitech Group</Text>
+                <Image w={"5vw"} objectFit={'contain'} src="https://contentstatic.techgig.com/photo/102076932/newgen-plans-to-hire-500-techies-for-expansion-as-revenue-soars-by-34.jpg?11590" alt="Newgen Software" />
+                <Text as={'b'}>Newgen Software</Text>
                 <Text mt={12} color={"brand.130"}>Loremrem ipsum dolor sit amet consectetur adipisicing elit. Loremrem ipsum Loremrem ipsum dolor sit amet consectetur adipisicing elit. Loremrem ipsum Loremrem ipsum dolor sit. </Text>
                <Flex mt={6} gap={8}>
-               <Flex > <MapPin color="#19d600" />&nbsp;Mumbai</Flex>
-               <Text as={'b'} color={"brand.600"}>3 jobs</Text>
+               <Flex > <MapPin color="#19d600" />&nbsp;Delhi</Flex>
+               <Text as={'b'} color={"brand.600"}>1 jobs</Text>
                </Flex>
                 </Box>
               </GridItem>
             </Grid>
         </Flex>
+
+        {/* chatbot */}
+        <Box borderRadius={'lg'} pos={'fixed'} bgColor={"brand.300"} right={24} bottom={28} maxW={"20vw"}  display={isOpen === false && "none"} >
+             <Flex justifyContent={'space-between'} px={4} py={2}>
+             <Text as={'b'}>Welcome {user.name || ""}!</Text>
+             <X onClick={()=> setIsOpen(!isOpen)} cursor={'pointer'} />
+             </Flex>
+             <Box minH={"45vh"} maxH={"45vh"} bgColor={"brand.100"} overflowY={"scroll"} py={4}>
+              {
+                chat.length > 0 && chat.map((item, ind)=>{
+                  if(ind%2 === 0){
+                    return (
+                      <Text px={4} py={2} bgColor={'brand.500'} w={'fit-content'} color={"brand.100"} borderRadius={"20px 20px 20px 0"} mx={4} my={2}>{item}</Text>
+                    )
+                  }else{
+                    return (
+                      <Flex justifyContent={'flex-end'}>
+                      <Text px={4} py={2} bgColor={'brand.300'} w={'fit-content'} borderRadius={"20px 20px 0px 20px"} mx={4} my={2}>{item}</Text>
+                      </Flex>
+                    )
+                  }
+                })
+              }
+             </Box>
+             <Flex >
+              <Input id="query" bgColor={"brand.110"}  type="text" placeholder="Write your query!" border={"none !important"} outline={"none !important"} _focus={{borderColor: "none !important"}}></Input>
+              <Button onClick={handleSend}>Send</Button>
+             </Flex>
+        </Box>
+        <Box >
+             <Image display={isOpen === true && "none" } onClick={handleOpen} cursor={"pointer"} pos={'fixed'} right={12} bottom={8} zIndex={10} src={chatbotImg}  w={"8vw"}/>
+             <Image display={isOpen === false && "none"} onClick={()=> setIsOpen(!isOpen)} cursor={"pointer"} pos={'fixed'} right={12} bottom={8} zIndex={10} src={closeImage}  w={"7vw"}/>
+        </Box>
     </Box>
   );
 };

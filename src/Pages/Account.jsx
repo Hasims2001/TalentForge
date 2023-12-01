@@ -10,7 +10,7 @@ import { updateAccountJobseeker, updateAccountRecruiter } from '../Redux/AuthRed
 import { RESETALL } from '../Redux/actionType';
 export const Account = () => {
   const {  role, user, token, loading, error, message } = useSelector((store) => store.Auth);
-  const [skills, setSkills] = React.useState([])
+  const [skills, setSkills] = React.useState(new Set())
   const toast = useToast()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -24,6 +24,11 @@ export const Account = () => {
     }
   }, [error])
 
+  useEffect(()=>{
+    if(user.role === "Jobseeker" &&  user.skills.length > 0){
+      setSkills(new Set(user.skills))
+    }
+  }, [user])
   useEffect(()=>{
     if(message!== ""){
       toast({
@@ -47,16 +52,15 @@ position: 'bottom-right',
   const handleAdd = ()=>{
     let curr = document.querySelector("#skill").value
     if(curr !== "" && curr !== " "){
-        setSkills([
-            ...skills,
-            curr
-        ])
+      const newSkillsSet = new Set([...skills, curr.toLowerCase()]);
+      console.log(newSkillsSet)
+        setSkills(newSkillsSet)
     }
   }
   const handleDelete  = (id)=>{
-    let filtered = skills.filter((ele, index)=>{
-        return index !== +id
-    })
+    let filtered = new Set(Array.from(skills).filter((ele, index)=>{
+      return index !== +id
+  }))
     setSkills(filtered)
   }
   const handleLogout = ()=>{
@@ -127,22 +131,23 @@ position: 'bottom-right',
     if(degreeName === "" || intitute === "" || year === ""){
       errorToast()
     }else{
-      makeUpdateRequest({degreeName, intitute, year})
+      let education = `${degreeName}\n${intitute}\n${year}`
+      makeUpdateRequest({"education": education, "graduate": degreeName})
     }
   }
 
   const handleSkills = (e)=>{
     e.preventDefault()
-    if(skills.length === 0){
+    if(Array.from(skills).length === 0){
         toast({
-position: 'bottom-right',
+            position: 'bottom-right',
             title: 'Skill box is empty!',
             status: 'error',
             duration: 9000,
             isClosable: true,
           })
     }else{
-        console.log(skills)
+        makeUpdateRequest({skills: Array.from(skills)})
     }
   }
   const handleExperince= (e)=>{
@@ -155,9 +160,11 @@ position: 'bottom-right',
     if(companyName === "" || position === "" || from === "" || to === ""){
       errorToast()
     }else{
-      makeUpdateRequest({companyName, position, from, to})
+      let experience = `${companyName}\n${position}\n${from}\n${to}`
+      makeUpdateRequest({experience})
     }
   }
+  console.log(user)
   return (
     <Flex gap={12} >
         <Stack h={'fit-content'} gap={8} px={20} my={8} py={12} boxShadow={'lg'} rounded={'xl'} textAlign={'center'} >
@@ -192,8 +199,8 @@ position: 'bottom-right',
           
             <Flex gap={4}>
                 {
-                    skills.length > 0 && skills.map((item, ind)=>(
-                        <Flex  gap={2} alignItems={'center'} p={2} borderRadius={'full'} border={"1px solid #e60000"}>
+                    Array.from(skills).map((item, ind)=>(
+                        <Flex key={ind}  gap={2} alignItems={'center'} p={2} borderRadius={'full'} border={"1px solid #e60000"}>
                         <Text as={'span'} fontSize={"lg"}  key={ind}>{item} </Text>
                         <XCircle id={ind} onClick={(e)=>handleDelete(e.target.id)} style={{cursor:'pointer'}} size={20} color="#e60000" />
                         </Flex>
@@ -207,19 +214,19 @@ position: 'bottom-right',
             <form onSubmit={handleEducational}>
             <Heading px={8} pt={8} as={'h3'} size={'lg'}>Educational Information!</Heading>
             <Flex flexWrap={'wrap'} maxW={"60%"} gap={8} p={8} >
-                <InputDesign ids="degreeName" types={'text'} name="Degree/Standard name" values={`${user.degreeName || ""}`}></InputDesign>
-                <InputDesign ids="intitute" types={'text'} name="Intitute name" values={`${user.intitute || ""}`}></InputDesign>
-                <InputDesign ids="year" types={'number'} name="Year of completion" values={`${user.year || ""}`}></InputDesign>
+                <InputDesign ids="degreeName" types={'text'} name="Degree/Standard name" values={`${user.graduate || ""}`}></InputDesign>
+                <InputDesign ids="intitute" types={'text'} name="Intitute name" values={`${user?.education.split("\n")[1] || ""}`}></InputDesign>
+                <InputDesign ids="year" types={'number'} name="Year of completion" values={`${user?.education.split("\n")[2] || ""}`}></InputDesign>
                 <ButtonDesign isLoading={loading} types={"submit"} values={"Update Education"}></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleExperince}>
-            <Heading px={8} pt={8} as={'h3'} size={'lg'}>Experince Information!</Heading>
+            <Heading px={8} pt={8} as={'h3'} size={'lg'}>Experience Information!</Heading>
             <Flex flexWrap={'wrap'} maxW={"60%"} gap={8} p={8} >
-                <InputDesign ids="companyName" types={'text'} name="Company name" values={`${user.companyName || ""}`}></InputDesign>
-                <InputDesign ids="position" types={'text'} name="Position" values={`${user.position || ""}`}></InputDesign>
-                <InputDesign ids="from" types={'date'} name="From" values={`${user.from || ""}`}></InputDesign>
-                <InputDesign ids="to" types={'date'} name="To" values={`${user.to || ""}`}></InputDesign>
+                <InputDesign ids="companyName" types={'text'} name="Company name" values={`${user?.experience.split("\n")[0] || ""}`}></InputDesign>
+                <InputDesign ids="position" types={'text'} name="Position" values={`${user?.experience.split("\n")[1] || ""}`}></InputDesign>
+                <InputDesign ids="from" types={'date'} name="From" values={`${user?.experience.split("\n")[2] || ""}`}></InputDesign>
+                <InputDesign ids="to" types={'date'} name="To" values={`${user?.experience.split("\n")[3] || ""}`}></InputDesign>
                 <ButtonDesign isLoading={loading} types={"submit"} values={"Update Experince"}></ButtonDesign>
             </Flex>
             </form>
