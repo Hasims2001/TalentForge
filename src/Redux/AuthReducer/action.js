@@ -15,7 +15,7 @@ export const doLogin = (API_URL, userData) => async(dispatch)=>{
         }
        }catch(error){
        
-        dispatch({type: ERROR, payload: error.response.data.message})
+        dispatch({type: ERROR, payload: error?.response.data.message})
        }
   
 }
@@ -31,7 +31,7 @@ export const doRegister = (API_URL, userData)=> async(dispatch)=>{
             dispatch({type: ERROR, payload: res.response.data.message})
         }
       }catch(error){
-        dispatch({type: ERROR, payload: error.response.data.message})
+        dispatch({type: ERROR, payload: error?.response.data.message})
       }
    
 }

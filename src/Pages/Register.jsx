@@ -41,7 +41,13 @@ position: 'bottom-right',
 
     useEffect(()=>{
         if(message === "Register successfully!"){
-            alert(message + ", Login to continue")
+          toast({
+            position: 'bottom-right',
+            title: message + ", Login to continue",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
             navigate("/login")
         }
         return ()=>{

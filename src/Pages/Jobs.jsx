@@ -43,20 +43,6 @@ export const Jobs = () => {
     }
   }, [searchParam, params]);
 
-  useEffect(() => {
-    if (error) {
-      toast({
-        position: "bottom-right",
-        title: error,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-    return () => {
-      dispatch({ type: RESET_JOBSEEKER });
-    };
-  }, [error]);
 
 
   const handleApply = (job_id) => {
