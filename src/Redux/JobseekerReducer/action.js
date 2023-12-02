@@ -1,5 +1,5 @@
 import  axios  from "axios"
-import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, JOB_APPLIED, LOADING } from "../actionType"
+import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, GOT_AI_OUTPUT, JOB_APPLIED, LOADING } from "../actionType"
 
 
 export const getAllJobs= (token)=>async(dispatch)=>{
@@ -54,6 +54,48 @@ export const getJobApplications = (token)=> async(dispatch)=>{
         res = await res?.data
         if(!res.issue){
             dispatch({type: APPLIED_JOB_APPLICATION, payload: res.data})
+        }else{
+            dispatch({type: ERROR, payload: res.response?.data.message})
+        }
+    } catch (error) {
+        dispatch({type: ERROR, payload: error.response?.data.message || "something is wrong, please try after sometime."})
+    }
+}
+
+export const getRecommendedJobs = (query, token)=> async(dispatch)=>{
+    dispatch({type: LOADING})
+    try {
+        let res = await axios.post(`${process.env.REACT_APP_JOB_POSTING}/recommend`, query,  {headers: {Authorization: token}})
+        res = await res?.data
+        if(!res.issue){
+            // if(res.message === "second_output"){
+            //     let data = res.data
+            //     const content = data[0][0][0]["message"][0]["content"]
+            //     const role = data[0][0][0]["message"][1]["role"]
+            //     console.log(content, role)
+            //     res.data = {
+            //      "content":  content,
+            //      "role": role
+            //      } 
+            // }
+            dispatch({type: GOT_AI_OUTPUT, payload: res.data})
+        }else{
+            dispatch({type: GOT_AI_OUTPUT, payload:  res.message})
+        }
+    } catch (error) {
+        dispatch({type: GOT_AI_OUTPUT, payload: error.message})
+
+        // dispatch({type: ERROR, payload: error.response?.data.message || "something is wrong, please try after sometime."})
+    }
+}
+
+export const getJobsBytitle = (title, token)=> async(dispatch)=>{
+    dispatch({type: LOADING})
+    try {
+        let res = await axios.get(`${process.env.REACT_APP_JOB_POSTING}/search/${title}`,  {headers: {Authorization: token}})
+        res = await res?.data
+        if(!res.issue){
+            dispatch({type: ALL_JOBS_GETTED, payload: res.data})
         }else{
             dispatch({type: ERROR, payload: res.response?.data.message})
         }

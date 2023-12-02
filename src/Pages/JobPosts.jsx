@@ -166,6 +166,7 @@ export const JobPosts = () => {
               borderRadius={12}
             >
               <Stack textOverflow={"ellipsis"} gap={4}>
+               <Text as={'b'}>ID: {item.id}</Text>
                 <Heading as={"h4"} fontSize={20}>
                   {item.job_title}
                 </Heading>

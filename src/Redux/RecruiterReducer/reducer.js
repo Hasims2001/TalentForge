@@ -9,6 +9,7 @@ import {
   APPLICATION_GETTED,
   APPLICATION_UPDATED,
   RESET_RECRUITER,
+  GOT_AI_OUTPUT_RECRUITER,
 } from "../actionType";
 
 const init = {
@@ -17,6 +18,7 @@ const init = {
   jobposted: [],
   applications: [],
   message: "",
+  chatWithAI : []
 };
 export const reducer = (state = init, { type, payload }) => {
   switch (type) {
@@ -93,6 +95,16 @@ export const reducer = (state = init, { type, payload }) => {
         applications: updated,
         message: `Application udpated successfully!`,
       };
+    case GOT_AI_OUTPUT_RECRUITER:
+      return {
+        ...state,
+        loading: false,
+        chatWithAI : [
+          ...state.chatWithAI,
+          payload
+        ]
+
+      }
     default:
       return state;
   }

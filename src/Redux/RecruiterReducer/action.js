@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { APPLICATION_GETTED, APPLICATION_UPDATED, ERROR, JOB_DELETED, JOB_GETTED, JOB_POSTED, JOB_UPDATED, LOADING } from '../actionType'
+import { APPLICATION_GETTED, APPLICATION_UPDATED, ERROR, GOT_AI_OUTPUT_RECRUITER, JOB_DELETED, JOB_GETTED, JOB_POSTED, JOB_UPDATED, LOADING } from '../actionType'
 
 
 export const getJobPost = (id, token) => async (dispatch)=>{
@@ -98,5 +98,23 @@ export const updateJobApplications = (appData, id, token)=> async(dispatch)=>{
     }catch(error){
    
     dispatch({type: ERROR, payload: error.response?.data.message || "something is wrong, please try after sometime."})
+   }
+}
+
+
+// Recommended Jobseeker
+export const getRecommendedJobseeker = (query, token) => async (dispatch)=>{
+    dispatch({type: LOADING})
+    try {
+        let res = await axios.post(`${process.env.REACT_APP_APPLICATION}/recommend`,query,  {headers: {Authorization: token}})
+        res = await res?.data
+        if(!res.issue){
+            dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: res.data})
+        }else{
+            dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: res.message})
+        }
+    }catch(error){
+        dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: error.message})
+    // dispatch({type: ERROR, payload: error.response?.data.message || "something is wrong, please try after sometime."})
    }
 }
