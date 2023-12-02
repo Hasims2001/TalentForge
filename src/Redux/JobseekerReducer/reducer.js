@@ -1,4 +1,4 @@
-import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, JOB_APPLIED, LOADING, RESET_JOBSEEKER, } from "../actionType";
+import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, GOT_AI_OUTPUT, JOB_APPLIED, LOADING, RESET_JOBSEEKER, } from "../actionType";
 const init = {
     loading: false,
     error: "",
@@ -6,7 +6,8 @@ const init = {
     user: {},
     jobs: [],
     applied : [],
-    message: ""
+    message: "",
+    chatWithAI: [],
 }
 export const reducer = (state=init, {type, payload})=>{
     switch(type){
@@ -32,7 +33,8 @@ export const reducer = (state=init, {type, payload})=>{
             return {
                 ...state,
                 loading: false,
-                jobs: payload
+                jobs: payload,
+                message : "all jobs by title"
             }
         case JOB_APPLIED:
             let filtered = state.jobs.filter(item=> item.id !== payload.job_id)
@@ -53,6 +55,15 @@ export const reducer = (state=init, {type, payload})=>{
                 loading: false,
                 applied: payload,
                 message: "applications got successfully!"
+            }
+        case GOT_AI_OUTPUT:
+            return{
+                ...state,
+                loading: false,
+                chatWithAI: [
+                    ...state.chatWithAI,
+                    payload
+                ]
             }
         default:
             return state

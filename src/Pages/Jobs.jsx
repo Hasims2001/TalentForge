@@ -18,10 +18,10 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllJobs, getAllJobsByCategory, postJobApplication } from "../Redux/JobseekerReducer/action";
+import { getAllJobs, getAllJobsByCategory, getJobsBytitle, postJobApplication } from "../Redux/JobseekerReducer/action";
 import { RESET_JOBSEEKER } from "../Redux/actionType";
 import { Flag } from "lucide-react";
-import {useParams} from "react-router-dom"
+import {useParams, useSearchParams} from "react-router-dom"
 import { ContentNotFound } from "../Components/ContentNotFound";
 export const Jobs = () => {
   const dispatch = useDispatch();
@@ -32,13 +32,16 @@ export const Jobs = () => {
   const params = useParams()
   const [reportId, setReportId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [searchParam] = useSearchParams()
   useEffect(() => {
-    if(params.category){
+    if(searchParam.get("search")){
+      dispatch(getJobsBytitle(searchParam.get("search"), token))
+    }else if(params.category){
       dispatch(getAllJobsByCategory(params.category, token));
     }else if (jobs.length === 0) {
       dispatch(getAllJobs(token));
     }
-  }, []);
+  }, [searchParam, params]);
 
   useEffect(() => {
     if (error) {

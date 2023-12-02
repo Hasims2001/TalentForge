@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HomeImg from "../Assets/home.png";
 import {
   Box,
@@ -20,10 +20,12 @@ import OffersImg from "../Assets/search.png";
 import companies from "../Assets/companies.png"
 import companiesTwo from '../Assets/companies-two.png';
 import svgIconLite from '../Assets/svgBGlite.png';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,} from 'react-router-dom'
 import chatbotImg from "../Assets/chatboat.png";
 import closeImage from "../Assets/close.png";
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import {  getRecommendedJobs } from "../Redux/JobseekerReducer/action";
+import { getRecommendedJobseeker } from "../Redux/RecruiterReducer/action";
 const categories = [
   {
     "id": 1,
@@ -63,19 +65,65 @@ export const Home = () => {
     navigate(`/jobs/${category_name}`)
   }
   const toast = useToast()
-  const {user} = useSelector(store=> store.Auth)
+  const queryRef = useRef()
+  const {user, token, role} = useSelector(store=> store.Auth)
+  const {jobs, message} = useSelector(store=> store.Jobseeker)
+  const JobseekerAI = useSelector(store=> store.Jobseeker.chatWithAI)
+  const RecruiterAI = useSelector(store=> store.Recruiter.chatWithAI)
   const [chat, setChat] = useState([`Hello ${user.name || ""}!\nHow can I help you?`])
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    if(JobseekerAI.length > 0){
+      let output = JobseekerAI[JobseekerAI.length-1]
+      
+      output = output["content"]
+      setChat([
+        ...chat,
+        output
+      ])
+    }
+  }, [JobseekerAI])
 
+  useEffect(()=>{
+    if(RecruiterAI.length > 0){
+      let output = RecruiterAI[RecruiterAI.length-1]
+      
+      output = output["content"]
+      setChat([
+        ...chat,
+        output
+      ])
+    }
+  }, [RecruiterAI])
+  
   const handleSend = ()=>{
-    let query = document.querySelector("#query").value;
-    if(query){
+    let query = queryRef.current.value;
+    if(query && role === "Jobseeker"){
+      dispatch(getRecommendedJobs([...JobseekerAI, {"role": "user", "content": query}], token))
       setChat([
         ...chat,
         query
       ])
+      queryRef.current.value = ""
+    }else if(query && role === "Recruiter"){
+      dispatch(getRecommendedJobseeker([...JobseekerAI, {"role": "user", "content": query}], token))
+      setChat([
+        ...chat,
+        query
+      ])
+      queryRef.current.value = ""
     }
    
+  }
+  
+
+  const handleSearch = ()=>{
+    let search = document.querySelector("#searchBox").value;
+    if(search){
+      navigate(`/jobs?search=${search}`)
+    }
   }
   const handleOpen =()=>{
     if(user.name){
@@ -89,7 +137,6 @@ export const Home = () => {
       })
     }
   }
-  console.log(user)
   return (
     <Box px={12} mx={-12}>
       {/* section 1 */}
@@ -120,23 +167,19 @@ export const Home = () => {
 
           <Flex
             mt={12}
-            gap={4}
-            px={4}
+            gap={8}
+            px={6}
             pt={6}
             borderRadius={12}
             bgColor={"brand.100"}
           >
             <InputDesign
               req={false}
+              ids={"searchBox"}
               types="search"
               placeholderValue="Job Title"
             />
-            <Select border={"none !important"} outline={"none !important"}>
-              <option value={""}>Select City</option>
-              <option value={"Vadodara"}>Vadodara</option>
-              <option value={"Ahemdabad"}>Ahemdabad</option>
-            </Select>
-            <Button px={8} py={4}>
+            <Button px={8} py={4} onClick={handleSearch}>
               Search
             </Button>
           </Flex>
@@ -391,7 +434,7 @@ export const Home = () => {
         </Flex>
 
         {/* chatbot */}
-        <Box borderRadius={'lg'} pos={'fixed'} bgColor={"brand.300"} right={24} bottom={28} maxW={"20vw"}  display={isOpen === false && "none"} >
+        <Box  zIndex={10} borderRadius={'lg'} pos={'fixed'} bgColor={"brand.300"} right={24} bottom={28} maxW={"20vw"}  display={isOpen === false && "none"} >
              <Flex justifyContent={'space-between'} px={4} py={2}>
              <Text as={'b'}>Welcome {user.name || ""}!</Text>
              <X onClick={()=> setIsOpen(!isOpen)} cursor={'pointer'} />
@@ -401,11 +444,11 @@ export const Home = () => {
                 chat.length > 0 && chat.map((item, ind)=>{
                   if(ind%2 === 0){
                     return (
-                      <Text px={4} py={2} bgColor={'brand.500'} w={'fit-content'} color={"brand.100"} borderRadius={"20px 20px 20px 0"} mx={4} my={2}>{item}</Text>
+                      <Text px={4} key={ind} py={2} bgColor={'brand.500'} w={'fit-content'} color={"brand.100"} borderRadius={"20px 20px 20px 0"} mx={4} my={2}>{item}</Text>
                     )
                   }else{
                     return (
-                      <Flex justifyContent={'flex-end'}>
+                      <Flex key={ind} justifyContent={'flex-end'}>
                       <Text px={4} py={2} bgColor={'brand.300'} w={'fit-content'} borderRadius={"20px 20px 0px 20px"} mx={4} my={2}>{item}</Text>
                       </Flex>
                     )
@@ -414,7 +457,7 @@ export const Home = () => {
               }
              </Box>
              <Flex >
-              <Input id="query" bgColor={"brand.110"}  type="text" placeholder="Write your query!" border={"none !important"} outline={"none !important"} _focus={{borderColor: "none !important"}}></Input>
+              <Input id="query" ref={queryRef} bgColor={"brand.110"}  type="text" placeholder="Write your query!" border={"none !important"} outline={"none !important"} _focus={{borderColor: "none !important"}}></Input>
               <Button onClick={handleSend}>Send</Button>
              </Flex>
         </Box>
