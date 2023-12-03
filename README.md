@@ -36,7 +36,7 @@ Welcome to Talent Forge, Our cutting-edge job matching platform leverages the po
 
 # Front-end:
 
-- **Website URL:** [https://talent-forge-one.vercel.app](https://talentforge.netlify.app/)
+- **Website URL:** [https://talent-forge-one.vercel.app](https://talent-forge-one.vercel.app)
 
 
 # Back-end:
