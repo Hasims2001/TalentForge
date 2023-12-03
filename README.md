@@ -44,9 +44,20 @@ Welcome to Talent Forge, Our cutting-edge job matching platform leverages the po
 
 
 ## Screenshot
-### Jobseeker Side:
 
-### Recruiter Side:
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/7be9828e-fd56-42bb-8980-828715c204d1)
+
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/9bacaba2-2292-4810-9a10-d4b5232798c4)
+
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/310a36c3-6c38-4434-a530-cbef388d9ca4)
+
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/28a64051-e401-47c0-b9d2-e36e5ab5d448)
+
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/c269d8ed-78b4-4c4b-951b-f6a2c448741c)
+
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/7f0ef349-f76d-4b6e-b749-036103018b45)
+
+![image](https://github.com/Hasims2001/TalentForge/assets/58412185/c3a1e326-f020-40e5-8295-150d50e71f00)
 
 ## Installation
 To set up the project locally, follow these steps:
