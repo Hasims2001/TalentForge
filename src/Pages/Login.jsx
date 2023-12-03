@@ -15,13 +15,15 @@ import { ButtonDesign } from "../Components/ButtonDesign";
 import {useDispatch, useSelector} from "react-redux"
 import { postLoginRecruiter } from "../Redux/AuthReducer/action";
 import { postLoginJobseeker } from "../Redux/AuthReducer/action";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { RESET_AUTH } from "../Redux/actionType";
 export const Login = () => {
     const [data, setData] = useState()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const location = useLocation()
+    const last = location.state?.from?.pathname || "/";
     const toast = useToast()
     const { loading, error,  user, token} = useSelector(store=> store.Auth)
     useEffect(()=>{
@@ -45,13 +47,13 @@ position: 'bottom-right',
         Cookies.set("userRole", user.role)
         Cookies.set('userToken', token)
        toast({
-position: 'bottom-right',
+        position: 'bottom-right',
          title: "Login Successful",
          status: 'success',
          duration: 9000,
          isClosable: true,
        })
-        navigate("/",{replace: true})
+        navigate(last,{replace: true})
       }
   }, [token])
     const handleForm = (e)=>{

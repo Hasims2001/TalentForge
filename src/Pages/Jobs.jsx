@@ -19,7 +19,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllJobs, getAllJobsByCategory, getJobsBytitle, postJobApplication } from "../Redux/JobseekerReducer/action";
-import { RESET_JOBSEEKER } from "../Redux/actionType";
 import { Flag } from "lucide-react";
 import {useParams, useSearchParams} from "react-router-dom"
 import { ContentNotFound } from "../Components/ContentNotFound";
@@ -27,7 +26,7 @@ export const Jobs = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const reportRef = useRef();
-  const { jobs, error } = useSelector((store) => store.Jobseeker);
+  const { jobs, loading } = useSelector((store) => store.Jobseeker);
   const { token, role } = useSelector((store) => store.Auth);
   const params = useParams()
   const [reportId, setReportId] = useState(null);
@@ -44,7 +43,7 @@ export const Jobs = () => {
   }, [searchParam, params]);
 
 
-
+ 
   const handleApply = (job_id) => {
     if (role === "Jobseeker") {
       dispatch(postJobApplication({"job_posting_id": job_id}, token))
@@ -154,7 +153,7 @@ export const Jobs = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {jobs.length === 0 && <ContentNotFound msg="No Jobs Found!"/>}
+      {!loading && jobs.length === 0 && <ContentNotFound msg="No Jobs Found!"/>}
     </Stack>
   );
 };
