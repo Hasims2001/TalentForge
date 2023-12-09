@@ -5,12 +5,16 @@ Welcome to Talent Forge, Our cutting-edge job matching platform leverages the po
  Single handly built project(frontend & backend) in span of 8 days.
 
 ## Table of Contents
+- [Demo](#Demo)
 - [Features](#features)
 - [Tech Stack](#Tech-stack)
 - [Links](#Links)
 - [Screenshot](#Screenshot)
 - [Installation](#installation)
 
+
+## Demo
+Video Link: https://youtu.be/HPg_oU8sAx8
 
 
 ## Features
