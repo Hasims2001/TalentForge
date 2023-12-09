@@ -1,4 +1,4 @@
-import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, GOT_AI_OUTPUT, JOB_APPLIED, LOADING, RESET_JOBSEEKER, } from "../actionType";
+import { ALL_JOBS_GETTED, APPLIED_JOB_APPLICATION, ERROR, GOT_AI_OUTPUT, JOB_APPLIED, LOADING, RESETMSG, RESET_JOBSEEKER, } from "../actionType";
 const init = {
     loading: false,
     error: "",
@@ -8,6 +8,7 @@ const init = {
     applied : [],
     message: "",
     chatWithAI: [],
+    recommendedJobs: []
 }
 export const reducer = (state=init, {type, payload})=>{
     switch(type){
@@ -22,12 +23,18 @@ export const reducer = (state=init, {type, payload})=>{
                 loading: false,
                 error: payload
             }
+        case RESETMSG:
+            return {
+                ...state,
+                message: ""
+            }
         case RESET_JOBSEEKER:
             return{
                 ...state,
                 loading: false,
                 error : "",
-                message: ""
+                message: "",
+                recommendedJobs: []
             }
         case ALL_JOBS_GETTED:
             return {
@@ -57,14 +64,19 @@ export const reducer = (state=init, {type, payload})=>{
                 message: "applications got successfully!"
             }
         case GOT_AI_OUTPUT:
-            return{
+            let obj = {
                 ...state,
                 loading: false,
                 chatWithAI: [
                     ...state.chatWithAI,
-                    payload
+                    payload.data
                 ]
             }
+            if(payload.message === "here is the some recommendation according to your skills:"){
+                obj.recommendedJobs = payload.data.content
+                obj.message = payload.message
+            }
+            return obj
         default:
             return state
     }

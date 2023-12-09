@@ -2,9 +2,9 @@ import {useSelector} from "react-redux"
 import {useToast} from "@chakra-ui/react"
 import { Navigate  } from "react-router-dom";
 export const RecruiterRoutes = ({children}) => {
-    const {user} = useSelector(store=> store.Auth) 
+    const { role} = useSelector(store=> store.Auth) 
     const toast = useToast()
-    if(user.role === "Recruiter"){
+    if(role === "Recruiter"){
         return children
     }else{
         toast({

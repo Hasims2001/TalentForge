@@ -68,24 +68,13 @@ export const getRecommendedJobs = (query, token)=> async(dispatch)=>{
         let res = await axios.post(`${process.env.REACT_APP_JOB_POSTING}/recommend`, query,  {headers: {Authorization: token}})
         res = await res?.data
         if(!res.issue){
-            // if(res.message === "second_output"){
-            //     let data = res.data
-            //     const content = data[0][0][0]["message"][0]["content"]
-            //     const role = data[0][0][0]["message"][1]["role"]
-            //     console.log(content, role)
-            //     res.data = {
-            //      "content":  content,
-            //      "role": role
-            //      } 
-            // }
-            dispatch({type: GOT_AI_OUTPUT, payload: res.data})
+            dispatch({type: GOT_AI_OUTPUT, payload: res})
         }else{
-            dispatch({type: GOT_AI_OUTPUT, payload:  res.message})
+            dispatch({type: ERROR, payload:  res.message})
         }
     } catch (error) {
-        dispatch({type: GOT_AI_OUTPUT, payload: error.message})
+        dispatch({type: ERROR, payload: error.message})
 
-        // dispatch({type: ERROR, payload: error.response?.data.message || "something is wrong, please try after sometime."})
     }
 }
 

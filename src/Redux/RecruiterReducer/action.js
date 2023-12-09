@@ -109,12 +109,12 @@ export const getRecommendedJobseeker = (query, token) => async (dispatch)=>{
         let res = await axios.post(`${process.env.REACT_APP_APPLICATION}/recommend`,query,  {headers: {Authorization: token}})
         res = await res?.data
         if(!res.issue){
-            dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: res.data})
+            dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: res})
         }else{
-            dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: res.message})
+            dispatch({type: ERROR, payload: res.message})
         }
     }catch(error){
-        dispatch({type: GOT_AI_OUTPUT_RECRUITER, payload: error.message})
+        dispatch({type: ERROR, payload: error.message})
     // dispatch({type: ERROR, payload: error.response?.data.message || "something is wrong, please try after sometime."})
    }
 }
