@@ -18,7 +18,8 @@ const init = {
   jobposted: [],
   applications: [],
   message: "",
-  chatWithAI : []
+  chatWithAI : [],
+  recommendedApplicant : []
 };
 export const reducer = (state = init, { type, payload }) => {
   switch (type) {
@@ -39,6 +40,7 @@ export const reducer = (state = init, { type, payload }) => {
         error: "",
         loading: false,
         message: "",
+        recommendedApplicant: []
       };
     case JOB_POSTED:
       return {
@@ -96,15 +98,26 @@ export const reducer = (state = init, { type, payload }) => {
         message: `Application udpated successfully!`,
       };
     case GOT_AI_OUTPUT_RECRUITER:
-      return {
+      let obj = {
         ...state,
         loading: false,
         chatWithAI : [
           ...state.chatWithAI,
-          payload
+          payload.data
         ]
-
       }
+      if(payload.message === "here is the some recommendation according to job requirements:"){
+        obj.recommendedApplicant = payload.data.content
+        obj.message = payload.message
+      }
+
+      if(payload.message === "sorry, there is no jobseeker available who fullfill your requirements!"){
+        obj.chatWithAI = [
+          ...obj.chatWithAI,
+          {"content": payload.message, "role": "system"}
+        ]
+      }
+      return obj;
     default:
       return state;
   }

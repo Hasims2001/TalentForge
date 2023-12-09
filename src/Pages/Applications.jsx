@@ -79,7 +79,7 @@ export const Applications = () => {
         <Stack gap={4} overflowY={'scroll'} borderRadius={"10px 0 0 10px "}>
         {applications.length > 0 && applications.map(({job_posting, id, status})=>(
            <Box  borderRadius={"lg"}  cursor={'pointer'} onClick={()=> handleChoice({job_posting, id, status})} bgColor={currentJob.id === id ? 'brand.300' : "brand.100"}  key={id} p={4} >
-              <Text fontWeight="bold" overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap"  fontSize={18}>{job_posting.job_title} temp temp temp temp temp temp </Text>
+              <Text fontWeight="bold" overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap"  fontSize={18}>{job_posting.job_title}</Text>
               <Text as={'b'} color={"brand.130"}>{job_posting.recruiter.company_name}</Text>
            </Box>
         ))}

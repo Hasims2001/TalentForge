@@ -9,7 +9,6 @@ import {
   Stack,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerCloseButton,
@@ -157,7 +156,6 @@ export const JobPosts = () => {
             <Flex
               justifyContent={"space-between"}
               key={ind}
-              maxH={96}
               textOverflow={"ellipsis"}
               _hover={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
               boxShadow={"lg"}

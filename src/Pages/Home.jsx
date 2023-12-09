@@ -7,7 +7,6 @@ import {
   Heading,
   Input,
   Text,
-  Select,
   Stack,
   Button,
   Grid,
@@ -24,8 +23,10 @@ import {useNavigate,} from 'react-router-dom'
 import chatbotImg from "../Assets/chatboat.png";
 import closeImage from "../Assets/close.png";
 import {useDispatch, useSelector} from "react-redux"
+import {Link} from "react-router-dom"
 import {  getRecommendedJobs } from "../Redux/JobseekerReducer/action";
 import { getRecommendedJobseeker } from "../Redux/RecruiterReducer/action";
+import { RESETALL, RESETMSG, RESET_JOBSEEKER, RESET_RECRUITER } from "../Redux/actionType";
 const categories = [
   {
     "id": 1,
@@ -67,51 +68,74 @@ export const Home = () => {
   const toast = useToast()
   const queryRef = useRef()
   const {user, token, role} = useSelector(store=> store.Auth)
-  const {jobs, message} = useSelector(store=> store.Jobseeker)
+  const {recommendedJobs} = useSelector(store=> store.Jobseeker)
+  const {recommendedApplicant} = useSelector(store=> store.Recruiter)
+  const jobseekerMsg = useSelector(store=> store.Jobseeker.message)
+  const RecruiterMsg = useSelector(store=> store.Recruiter.message)
   const JobseekerAI = useSelector(store=> store.Jobseeker.chatWithAI)
   const RecruiterAI = useSelector(store=> store.Recruiter.chatWithAI)
-  const [chat, setChat] = useState([`Hello ${user.name || ""}!\nHow can I help you?`])
+  const [chat, setChat] = useState([{"content": `Hello ${user.name || ""}!\nHow can I help you?`, "role": "system"}])
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch()
   
   useEffect(()=>{
-    if(JobseekerAI.length > 0){
-      let output = JobseekerAI[JobseekerAI.length-1]
-      
-      output = output["content"]
+    if(jobseekerMsg === "here is the some recommendation according to your skills:"){
       setChat([
         ...chat,
-        output
+        {"content": jobseekerMsg, "role": "system"}
       ])
-    }
+      dispatch({type: RESETMSG})
+    }else if(JobseekerAI.length > 0 && chat.length > 1){
+      let output = JobseekerAI[JobseekerAI.length-1]
+      if(!Array.isArray(output)){
+        setChat([
+          ...chat,
+          output
+        ])
+      }
+     
+    }else if(chat.length === 1){
+      dispatch({type: RESET_JOBSEEKER})
+    } 
   }, [JobseekerAI])
 
   useEffect(()=>{
-    if(RecruiterAI.length > 0){
-      let output = RecruiterAI[RecruiterAI.length-1]
-      
-      output = output["content"]
+    if(RecruiterMsg === "here is the some recommendation according to job requirements:"){
       setChat([
         ...chat,
-        output
+        {"content": RecruiterMsg, "role": "system"}
       ])
-    }
+      dispatch({type: RESETMSG})
+    }else if(RecruiterAI.length > 0 && chat.length > 1){
+      let output = RecruiterAI[RecruiterAI.length-1]
+      if(!Array.isArray(output)){
+        setChat([
+          ...chat,
+          output
+        ])
+      }
+     
+    }else if(chat.length === 1){
+      dispatch({type: RESET_RECRUITER})
+    } 
   }, [RecruiterAI])
+  
   
   const handleSend = ()=>{
     let query = queryRef.current.value;
+    let queryObj = {"role": "user", "content": query}
     if(query && role === "Jobseeker"){
-      dispatch(getRecommendedJobs([...JobseekerAI, {"role": "user", "content": query}], token))
+      dispatch(getRecommendedJobs([...JobseekerAI, queryObj], token))
       setChat([
         ...chat,
-        query
+        queryObj
       ])
       queryRef.current.value = ""
     }else if(query && role === "Recruiter"){
-      dispatch(getRecommendedJobseeker([...JobseekerAI, {"role": "user", "content": query}], token))
+      dispatch(getRecommendedJobseeker([...RecruiterAI, queryObj], token))
       setChat([
         ...chat,
-        query
+        queryObj
       ])
       queryRef.current.value = ""
     }
@@ -437,23 +461,50 @@ export const Home = () => {
         <Box  zIndex={10} borderRadius={'lg'} pos={'fixed'} bgColor={"brand.300"} right={24} bottom={28} maxW={"20vw"}  display={isOpen === false && "none"} >
              <Flex justifyContent={'space-between'} px={4} py={2}>
              <Text as={'b'}>Welcome {user.name || ""}!</Text>
-             <X onClick={()=> setIsOpen(!isOpen)} cursor={'pointer'} />
+             <X onClick={handleOpen} cursor={'pointer'} />
              </Flex>
              <Box minH={"45vh"} maxH={"45vh"} bgColor={"brand.100"} overflowY={"scroll"} py={4}>
               {
                 chat.length > 0 && chat.map((item, ind)=>{
-                  if(ind%2 === 0){
+                  if(item && item.role !== "user"){
                     return (
-                      <Text px={4} key={ind} py={2} bgColor={'brand.500'} w={'fit-content'} color={"brand.100"} borderRadius={"20px 20px 20px 0"} mx={4} my={2}>{item}</Text>
+                      <Text px={4} key={ind} py={2} bgColor={'brand.500'} w={'fit-content'} color={"brand.100"} borderRadius={"20px 20px 20px 0"} mx={4} my={2}>{item.content}</Text>
                     )
                   }else{
                     return (
                       <Flex key={ind} justifyContent={'flex-end'}>
-                      <Text px={4} py={2} bgColor={'brand.300'} w={'fit-content'} borderRadius={"20px 20px 0px 20px"} mx={4} my={2}>{item}</Text>
+                      <Text px={4} py={2} bgColor={'brand.300'} w={'fit-content'} borderRadius={"20px 20px 0px 20px"} mx={4} my={2}>{item.content}</Text>
                       </Flex>
                     )
                   }
                 })
+              }
+              {
+                recommendedJobs.length > 0 && <Stack  >
+                  <Text fontWeight={'bold'} textAlign={'end'} px={4} py={2} bgColor={"brand.300"} as={Link} to={"/jobs/recommend"}>View All</Text>
+                 {recommendedJobs.length > 0 && recommendedJobs.map((item)=>(
+                    <Box key={item.id} mx={4} py={8} px={4} boxShadow={'lg'}>
+                      <Text as={'b'}>{item.job_title}</Text>
+                      <Text>Required Skills: {item.required_skills}</Text>
+                      <Text>Prefered Skills: {item.prefered_skills}</Text>
+                      <Text>Cateogry: {item.role_category}</Text>
+                      <Text>Salary: {item.salary}</Text>
+                    </Box>
+                  ))}
+                </Stack>
+              }
+              {
+                recommendedApplicant.length > 0 && <Stack  >
+                <Text fontWeight={'bold'} textAlign={'end'} px={4} py={2} bgColor={"brand.300"} as={Link} to={"/jobposts/applications/recommend"}>View All</Text>
+               {recommendedApplicant.length > 0 && recommendedApplicant.map((item)=>(
+                  <Box key={item.id} mx={4} py={8} px={4} boxShadow={'lg'}>
+                    <Text as={'b'}>{item.name}</Text>
+                    <Text>Skills: {item.skills}</Text>
+                    <Text>graduation: {item.graduation.join(",")}</Text>
+                    
+                  </Box>
+                ))}
+              </Stack>
               }
              </Box>
              <Flex >
@@ -463,7 +514,7 @@ export const Home = () => {
         </Box>
         <Box >
              <Image display={isOpen === true && "none" } onClick={handleOpen} cursor={"pointer"} pos={'fixed'} right={12} bottom={8} zIndex={10} src={chatbotImg}  w={"8vw"}/>
-             <Image display={isOpen === false && "none"} onClick={()=> setIsOpen(!isOpen)} cursor={"pointer"} pos={'fixed'} right={12} bottom={8} zIndex={10} src={closeImage}  w={"7vw"}/>
+             <Image display={isOpen === false && "none"} onClick={handleOpen} cursor={"pointer"} pos={'fixed'} right={12} bottom={8} zIndex={10} src={closeImage}  w={"7vw"}/>
         </Box>
     </Box>
   );

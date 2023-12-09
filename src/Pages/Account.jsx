@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { updateAccountJobseeker, updateAccountRecruiter } from '../Redux/AuthReducer/action';
 import { RESETALL } from '../Redux/actionType';
 export const Account = () => {
-  const {  role, user, token, loading, error, message } = useSelector((store) => store.Auth);
+  const {  role, user, token,  error, message } = useSelector((store) => store.Auth);
   const [skills, setSkills] = React.useState(new Set())
   const toast = useToast()
   const dispatch = useDispatch()
@@ -53,7 +53,6 @@ position: 'bottom-right',
     let curr = document.querySelector("#skill").value
     if(curr !== "" && curr !== " "){
       const newSkillsSet = new Set([...skills, curr.toLowerCase()]);
-      console.log(newSkillsSet)
         setSkills(newSkillsSet)
     }
   }
@@ -188,7 +187,7 @@ position: 'bottom-right',
                 <InputDesign ids="city" types={'text'} name="City" values={`${user.city || ""}`}></InputDesign>
                 <InputDesign ids="state" types={'text'} name="State" values={`${user.state || ""}`}></InputDesign>
                 <InputDesign ids="pincode" types={'number'} name="Pincode" values={`${user.pincode || ""}`}></InputDesign>
-                <ButtonDesign types={"submit"} isLoading={loading} values={"Update Profile"} ></ButtonDesign>
+                <ButtonDesign types={"submit"}  values={"Update Profile"} ></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleSkills}>
@@ -208,7 +207,7 @@ position: 'bottom-right',
                 }
             </Flex>
            
-            <ButtonDesign types={"submit"} isLoading={loading} values={"Update Skills"}></ButtonDesign>
+            <ButtonDesign types={"submit"}  values={"Update Skills"}></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleEducational}>
@@ -217,7 +216,7 @@ position: 'bottom-right',
                 <InputDesign ids="degreeName" types={'text'} name="Degree/Standard name" values={`${user.graduate || ""}`}></InputDesign>
                 <InputDesign ids="intitute" types={'text'} name="Intitute name" values={`${user?.education.split("\n")[1] || ""}`}></InputDesign>
                 <InputDesign ids="year" types={'number'} name="Year of completion" values={`${user?.education.split("\n")[2] || ""}`}></InputDesign>
-                <ButtonDesign isLoading={loading} types={"submit"} values={"Update Education"}></ButtonDesign>
+                <ButtonDesign  types={"submit"} values={"Update Education"}></ButtonDesign>
             </Flex>
             </form>
             <form onSubmit={handleExperince}>
@@ -227,7 +226,7 @@ position: 'bottom-right',
                 <InputDesign ids="position" types={'text'} name="Position" values={`${user?.experience.split("\n")[1] || ""}`}></InputDesign>
                 <InputDesign ids="from" types={'date'} name="From" values={`${user?.experience.split("\n")[2] || ""}`}></InputDesign>
                 <InputDesign ids="to" types={'date'} name="To" values={`${user?.experience.split("\n")[3] || ""}`}></InputDesign>
-                <ButtonDesign isLoading={loading} types={"submit"} values={"Update Experince"}></ButtonDesign>
+                <ButtonDesign  types={"submit"} values={"Update Experince"}></ButtonDesign>
             </Flex>
             </form>
         </Box>}
@@ -246,7 +245,7 @@ position: 'bottom-right',
                 <InputDesign ids="company_size" types={'text'} name="Company size (employees)" values={`${user.company_size || ""}`}></InputDesign>
                 <InputDesign ids="city" types={'text'} name="City" values={`${user.city || ""}`}></InputDesign>
                 <InputDesign ids="state" types={'text'} name="State" values={`${user.state || ""}`}></InputDesign>
-                <ButtonDesign types={"submit"} isLoading={loading} values={"Update Profile"} ></ButtonDesign>
+                <ButtonDesign types={"submit"}  values={"Update Profile"} ></ButtonDesign>
             </Flex>
             </form>
           </Box>}

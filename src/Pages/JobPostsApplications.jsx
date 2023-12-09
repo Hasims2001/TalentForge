@@ -7,9 +7,10 @@ import { getJobApplications, updateJobApplications } from "../Redux/RecruiterRed
 import {CircleDot, CheckCheck, Eye, PhoneOutgoing, CopyX} from "lucide-react"
 import { ApplicationView } from "../Components/ApplicationView";
 import { RESET_RECRUITER } from "../Redux/actionType";
+import { Loading } from "../Components/Loading";
 export const JobPostsApplications = () => {
   const params = useParams();
-  const {  error, jobposted, applications } = useSelector((store) => store.Recruiter);
+  const {  error, jobposted, applications, loading } = useSelector((store) => store.Recruiter);
 
   const {token} = useSelector(store=> store.Auth)
   const [currentJob, setCurrentJob] = useState(null);
@@ -38,6 +39,10 @@ position: 'bottom-right',
 
   const handleUpdate = (id, status)=>{
     dispatch(updateJobApplications( {status: status}, id, token))
+  }
+
+  if(loading){
+    return <Loading />
   }
  
   return (
@@ -70,7 +75,7 @@ position: 'bottom-right',
                 <ApplicationView key={id} job_seeker={job_seeker} status={status} ind={id} Icon={Icon}  timestamp={timestamp} handleUpdate={handleUpdate}/>
             )
           })}
-          {applications.length === 0 && <ContentNotFound msg="No applications found" />}
+          {!loading && applications.length === 0 && <ContentNotFound msg="No applications found" />}
           </Stack>
         </>
       ) : (
